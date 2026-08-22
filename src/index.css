@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tipografía de la marca — misma pila que el mealtracker para que el módulo
+   no se sienta "otra app" al entrar. */
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  color: #1F1F1F;
+  /* Rebote de scroll desactivado: dentro del iframe el rebote de iOS deja
+     ver el fondo del padre por debajo y delata el recuadro. */
+  overscroll-behavior-y: none;
+}
+
+/* El área útil del iframe. La app padre lo monta con
+   height: calc(100% - 64px - safe-area-inset-bottom) y encima le pinta un
+   degradado de 96px abajo y 46px arriba. Estas variables son la única
+   fuente de verdad de ese contrato: si el padre cambia, se cambia aquí. */
+:root {
+  --ecm-fade-top: 46px;
+  --ecm-fade-bottom: 96px;
+}

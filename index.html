@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#EDECE5" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- Robots off: este módulo vive embebido dentro de la app del cliente,
+         no es una página para buscar en Google. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Entrenamiento — Entrena con Método</title>
+    <style>
+      /* Fondo idéntico al de la app padre (theme.js → BG). Si esto no calza
+         byte a byte, el iframe se ve como un recuadro pegado encima en vez
+         de como una sección más de la app. */
+      html, body { margin: 0; padding: 0; background: #EDECE5; font-family: -apple-system, system-ui, sans-serif; }
+      /* Sin scroll horizontal jamás: dentro del iframe no hay forma de que
+         el cliente lo corrija. */
+      html, body { overflow-x: hidden; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
