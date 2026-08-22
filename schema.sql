@@ -532,6 +532,89 @@ where s.semana_iso is not null
 group by s.cliente_id, s.semana_iso;
 
 -- ================================================================
+-- 9. MIGRACIONES
+-- ================================================================
+-- Todo lo que se agregó DESPUÉS de la primera versión vive aquí, con
+-- `if not exists`. Así este archivo sigue siendo uno solo: sirve igual para
+-- una instalación nueva y para actualizar una que ya está corriendo. No hay
+-- que llevar cuenta de qué versión tienes — vuelves a correrlo y ya.
+
+-- ---- Miniatura del video subido ----
+-- Los videos de YouTube ya traen miniatura gratis (i.ytimg.com). Los que
+-- subes tú no, así que el CRM captura un fotograma al subirlos y lo guarda
+-- en el mismo bucket. Va en `poster_path` (ruta en Storage, necesita firma)
+-- y no en `poster_url`, que es para imágenes públicas.
+alter table ejercicios add column if not exists poster_path text;
+
+-- ---- Descanso entre ejercicios dentro de un bloque ----
+-- En un circuito hay DOS descansos distintos y confundirlos arruina la
+-- sesión: el corto entre una estación y la siguiente, y el largo al
+-- terminar la vuelta completa.
+--   rutina_bloques.descanso_seg        → entre VUELTAS (el largo)
+--   rutina_bloques.descanso_entre_seg  → entre EJERCICIOS (el corto)
+alter table rutina_bloques add column if not exists descanso_entre_seg int;
+
+-- ================================================================
+-- 10. HISTORIAL DE UN EJERCICIO
+-- ================================================================
+-- "La vez pasada levantaste 30 kg × 10, 10, 9, 8" — el dato que convierte
+-- marcar pesos en progresión visible. Se resuelve en el servidor porque
+-- hacerlo desde la app son dos viajes encadenados (buscar la última sesión,
+-- luego sus series) justo cuando el cliente está en medio del entreno.
+--
+-- Devuelve las series de la ÚLTIMA sesión completada en que ese cliente hizo
+-- ese ejercicio. Vacío si nunca lo ha hecho: primera vez, sin referencia.
+create or replace function ultimas_series(
+  p_cliente_id uuid,
+  p_ejercicio_id uuid
+) returns table (
+  fecha date,
+  serie_num int,
+  reps int,
+  peso numeric,
+  unidad text,
+  rir int
+)
+language sql stable
+as $$
+  with ultima as (
+    select s.id, s.fecha
+    from sesiones s
+    join series_log sl on sl.sesion_id = s.id
+    where s.cliente_id = p_cliente_id
+      and sl.ejercicio_id = p_ejercicio_id
+      and s.estado = 'completada'
+    order by s.fecha desc
+    limit 1
+  )
+  select u.fecha, sl.serie_num, sl.reps, sl.peso, sl.unidad, sl.rir
+  from ultima u
+  join series_log sl on sl.sesion_id = u.id
+  where sl.ejercicio_id = p_ejercicio_id
+    and sl.completada
+  order by sl.serie_num;
+$$;
+
+-- Récord: el peso más alto que ese cliente ha movido en ese ejercicio, y
+-- cuándo. Sirve para celebrarlo cuando lo supere.
+create or replace function record_ejercicio(
+  p_cliente_id uuid,
+  p_ejercicio_id uuid
+) returns table (peso numeric, reps int, unidad text, fecha date)
+language sql stable
+as $$
+  select sl.peso, sl.reps, sl.unidad, s.fecha
+  from series_log sl
+  join sesiones s on s.id = sl.sesion_id
+  where s.cliente_id = p_cliente_id
+    and sl.ejercicio_id = p_ejercicio_id
+    and sl.completada
+    and sl.peso is not null
+  order by sl.peso desc, sl.reps desc
+  limit 1;
+$$;
+
+-- ================================================================
 -- FIN. Corre esto en el SQL Editor del Supabase del CRM.
 -- Después: Storage → New bucket → nombre `ejercicios`, público NO.
 -- ================================================================
