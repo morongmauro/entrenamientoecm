@@ -21,9 +21,21 @@ repo del mealtracker.
 | Andamiaje de la app + identidad | Listo |
 | Galería de ejercicios (CRM) | Pendiente |
 | Constructor de rutinas (CRM) | Pendiente |
+| Visibilidad: "enviar al cliente" | Listo (`carga/migracion-visibilidad.sql` + botón en el CRM) |
+| Rutinas reales cargadas | Listo — 10 clientes, ver `carga/LEEME.md` |
 | Calendario del cliente | Pendiente |
 | Ejecución: reps, pesos, video, dibujo del cuerpo | Pendiente |
 | Enganche como pestaña en la app del cliente | Pendiente, **a propósito** |
+
+## Lo que ya está cargado
+
+Las rutinas de 10 clientes (importadas de Trainerize) viven ya en la base,
+**invisibles para ellos**: las fases entran con `visible_cliente = false` y
+solo se publican una a una desde el CRM. Ver `carga/LEEME.md`.
+
+Cuando se construya el calendario del cliente, **debe leer de la vista
+`rutinas_visibles`, nunca de `rutinas`**: es la única forma de que no se le
+escape un borrador, y además esa vista no expone `notas_coach`.
 
 ## Poner en marcha
 

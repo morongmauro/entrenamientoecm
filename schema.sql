@@ -177,12 +177,34 @@ create table if not exists fases (
   orden int default 1,               -- Fase 1, Fase 2… dentro del proceso del cliente
   estado text default 'borrador',    -- borrador | activa | finalizada | archivada
 
+  -- ---- Visibilidad para el cliente (ver también carga/migracion-visibilidad.sql) ----
+  -- `estado` es el estado de TRABAJO de la fase; esto es otra cosa: si el
+  -- cliente la ve o no en su app. Son decisiones distintas — puedes tener una
+  -- fase activa que aún estás afinando y no quieres que vea, y una finalizada
+  -- que sigue visible. Arranca en false: nada se publica solo.
+  visible_cliente boolean not null default false,
+  publicada_en  timestamptz,                                  -- cuándo se envió la 1ª vez
+  publicada_por uuid references auth.users on delete set null,
+
   origen_fase_id uuid references fases(id) on delete set null, -- de dónde se copió
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
 
 create index if not exists fases_cliente_idx on fases (user_id, cliente_id, orden);
+
+-- Para bases que YA tenían estas tablas de antes: `create table if not
+-- exists` no toca una tabla existente, así que las columnas de visibilidad
+-- no llegarían nunca y el índice de abajo fallaría con «column
+-- visible_cliente does not exist». Esto las añade cuando faltan y no hace
+-- nada cuando ya están. (Es lo mismo que hace carga/migracion-visibilidad.sql;
+-- se repite aquí para que este archivo funcione solo, en cualquier orden.)
+alter table fases
+  add column if not exists visible_cliente boolean not null default false,
+  add column if not exists publicada_en    timestamptz,
+  add column if not exists publicada_por   uuid references auth.users on delete set null;
+
+create index if not exists fases_visibles_idx on fases (cliente_id, visible_cliente);
 
 -- fecha_fin calculada: no se guarda para que no se desincronice al mover
 -- fecha_inicio o cambiar la duración.
@@ -215,12 +237,20 @@ create table if not exists rutinas (
   duracion_estimada_min int,
   tipo_sesion text default 'fuerza', -- fuerza | cardio | movilidad | mixta | descanso_activo
 
+  -- NULL = hereda la visibilidad de su fase (lo normal). Ponerlo a false
+  -- oculta SOLO esta rutina dentro de una fase ya enviada (el día que aún
+  -- estás armando); true la muestra aunque la fase no esté enviada.
+  visible_cliente boolean,
+
   es_plantilla boolean generated always as (cliente_id is null and fase_id is null) stored,
   origen_rutina_id uuid references rutinas(id) on delete set null,
   archivada boolean default false,
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+-- Misma red de seguridad que en `fases`, para bases que ya existían.
+alter table rutinas add column if not exists visible_cliente boolean;
 
 create index if not exists rutinas_fase_idx      on rutinas (fase_id, dia_orden);
 create index if not exists rutinas_plantilla_idx on rutinas (user_id, es_plantilla, archivada);
