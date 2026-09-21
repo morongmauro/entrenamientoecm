@@ -95,3 +95,37 @@ Al final de `carga-rutinas-trainerize.sql` está el bloque para deshacer:
 borra las fases importadas y, en cascada, sus rutinas, bloques, sesiones y
 series. Los ejercicios de la galería no se tocan salvo que se lo pidas
 expresamente (y solo los que nadie esté usando).
+
+---
+
+# La figura muscular
+
+`gen-figura.py` dibuja las dos siluetas —frente y espalda— sobre las que se
+pinta qué trabaja cada ejercicio. No es una lámina de anatomía: es lo justo
+para que alguien reconozca DÓNDE está el músculo de un vistazo.
+
+```
+python3 carga/gen-figura.py
+```
+
+Escribe `src/figura-formas.js` (lo usa `<FiguraMusculos>` en la app del
+cliente) y hay que pasar el mismo contenido al CRM, dentro de
+`musculos-figura.js`. Las formas son idénticas en los dos lados a propósito:
+el mismo ejercicio se tiene que ver igual en el CRM y en el teléfono.
+
+**No edites las coordenadas a mano.** Brazos, piernas y casi todos los
+músculos salen de recorrer una línea central con un radio por punto, por eso
+el brazo se estrecha hacia la muñeca sin que nadie cuadre decimales. El lado
+derecho es el izquierdo reflejado sobre `x=50`, así que nunca se desalinean.
+El próximo `gen-figura.py` se lleva por delante cualquier retoque manual.
+
+Antes de escribir nada, el script comprueba el contrato contra
+`src/musculos.js`: si un slug del catálogo se quedó sin forma, o hay una
+forma que no corresponde a ningún slug, **falla y no toca los archivos**. Sin
+esa comprobación el fallo es mudo — el músculo simplemente no se pinta y el
+ejercicio sale con el cuerpo en blanco, como si no trabajara nada.
+
+Los músculos se recortan contra la silueta (`clipPath`), así que las formas
+se dibujan generosas a propósito y manda el contorno. Solo se pinta lo que el
+ejercicio trabaja: pintar además los 30 en gris llenaba el cuerpo de placas
+pálidas y costaba distinguir cuál era el principal.

@@ -355,6 +355,122 @@ create index if not exists series_log_sesion_idx    on series_log (sesion_id);
 create index if not exists series_log_progreso_idx  on series_log (ejercicio_id, created_at desc);
 
 -- ================================================================
+-- 5b. EVENTOS  (lo que NO es una rutina)
+-- ================================================================
+-- Media planificación de un cliente no son rutinas: "los lunes y miércoles
+-- hace natación", "el 15 toca medición de peso", "esa semana está de viaje".
+-- Meter eso como rutinas falsas ensuciaría el historial — una rutina que
+-- nadie ejecuta cuenta como rutina no hecha y la adherencia sale mal.
+--
+-- Dos formas de caer en el calendario: `fecha` (una vez) o `dias_semana`
+-- (se repite mientras dure la fase). Ver carga/migracion-eventos.sql para
+-- la explicación larga y para correrlo sobre una base que ya existe.
+
+-- ---- 1. La tabla ----
+create table if not exists eventos (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null default auth.uid() references auth.users on delete cascade,
+  cliente_id uuid not null references clientes(id) on delete cascade,
+  fase_id uuid references fases(id) on delete cascade,   -- NULL = suelto en el calendario
+
+  tipo text not null default 'actividad',
+  -- actividad  natación, fútbol, caminata…  (algo que HACE)
+  -- medicion   pesarse, medidas, fotos      (algo que REGISTRA)
+  -- cita       consulta, control médico
+  -- nota       recordatorio sin acción      ("de viaje", "semana de descarga")
+  -- descanso   día libre marcado a propósito
+
+  titulo text not null,
+  detalle text,
+  hora time,
+  duracion_min int,
+
+  -- ---- Cuándo ----
+  fecha date,                          -- una vez
+  dias_semana text[] default '{}',     -- o se repite: ['L','X'] — mismo código que fases
+  semanas int[],                       -- NULL = todas las semanas de la fase; [1,3] = solo esas
+
+  -- Misma puerta que las rutinas: NULL hereda de la fase (lo normal), false
+  -- lo oculta aunque la fase esté enviada, true lo muestra aunque no lo esté.
+  -- Un evento sin fase y sin decidir NO se muestra: nada se publica solo.
+  visible_cliente boolean,
+
+  color text,                          -- opcional, para distinguirlo de un vistazo
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+
+  -- O cae en un día concreto, o se repite dentro de una fase. Sin una de las
+  -- dos el evento no sabría en qué casilla pintarse y quedaría invisible:
+  -- mejor que la base lo rechace a que el coach lo cree y no aparezca nunca.
+  constraint eventos_cuando_ck check (
+    fecha is not null
+    or (coalesce(array_length(dias_semana, 1), 0) > 0 and fase_id is not null)
+  )
+);
+
+create index if not exists eventos_cliente_idx on eventos (user_id, cliente_id, fecha);
+create index if not exists eventos_fase_idx    on eventos (fase_id);
+
+-- ---- 2. Lo que el cliente marcó de cada evento ----
+-- Un evento que se repite no tiene un solo "hecho": tiene uno por fecha. Por
+-- eso el registro lleva su propia fecha y no un booleano en `eventos`.
+create table if not exists evento_registros (
+  id uuid primary key default gen_random_uuid(),
+  evento_id uuid not null references eventos(id) on delete cascade,
+  cliente_id uuid not null references clientes(id) on delete cascade,
+  fecha date not null,
+  estado text not null default 'hecho',   -- hecho | saltado
+  nota text,
+  valor numeric,                          -- para las mediciones: el peso que puso
+  created_at timestamptz default now(),
+  unique (evento_id, fecha)
+);
+
+create index if not exists evento_registros_cliente_idx
+  on evento_registros (cliente_id, fecha desc);
+
+-- ---- 4. Las fechas reales de un evento ----
+-- Expande el evento a la lista de días en que cae. Un evento con `fecha` es
+-- un solo día; uno con `dias_semana` se recorre semana a semana dentro de la
+-- fase. Se calcula aquí y no en el navegador para que el CRM y la app del
+-- cliente pinten EXACTAMENTE los mismos días.
+create or replace function evento_fechas(p_evento_id uuid)
+returns table (fecha date)
+language sql stable as $$
+  with e as (select * from eventos where id = p_evento_id),
+       f as (select fa.fecha_inicio, fa.semanas
+               from fases fa join e on fa.id = e.fase_id)
+  -- caso 1: día suelto
+  select e.fecha from e where e.fecha is not null
+  union all
+  -- caso 2: se repite dentro de la fase
+  select (f.fecha_inicio + (s.n - 1) * 7 + d.off)::date
+    from e
+    join f on true
+    cross join generate_series(1, coalesce(f.semanas, 0)) as s(n)
+    cross join lateral (
+      select case dia
+               when 'L' then 0 when 'M' then 1 when 'X' then 2 when 'J' then 3
+               when 'V' then 4 when 'S' then 5 when 'D' then 6 end as off
+        from unnest(e.dias_semana) as dia
+    ) d
+   where e.fecha is null
+     and f.fecha_inicio is not null
+     and d.off is not null
+     and (e.semanas is null or s.n = any(e.semanas));
+$$;
+
+-- ---- 5. Lo que ve el cliente ----
+-- Misma regla que `rutinas_visibles`: el evento se ve si él lo dice, y si no
+-- dice nada, hereda de su fase. Un evento suelto (sin fase) sin decidir NO
+-- se ve — nada se publica solo.
+create or replace view eventos_visibles as
+  select e.*
+    from eventos e
+    left join fases f on f.id = e.fase_id
+   where coalesce(e.visible_cliente, f.visible_cliente, false);
+
+-- ================================================================
 -- 6. COPIAR Y PEGAR  (cliente→cliente, fase→fase, plantilla→cliente)
 -- ================================================================
 -- Estas funciones son el corazón de "importar rutinas". Van con
@@ -507,6 +623,8 @@ alter table rutina_bloques    enable row level security;
 alter table rutina_ejercicios enable row level security;
 alter table sesiones          enable row level security;
 alter table series_log        enable row level security;
+alter table eventos           enable row level security;
+alter table evento_registros  enable row level security;
 
 -- El catálogo de músculos es vocabulario compartido: lectura para todos.
 drop policy if exists musculos_lectura on musculos;
@@ -516,7 +634,7 @@ create policy musculos_lectura on musculos for select using (true);
 do $$
 declare t text;
 begin
-  foreach t in array array['ejercicios','fases','rutinas','sesiones'] loop
+  foreach t in array array['ejercicios','fases','rutinas','sesiones','eventos'] loop
     execute format('drop policy if exists %I_propias on %I', t, t);
     execute format(
       'create policy %I_propias on %I for all using (user_id = auth.uid()) with check (user_id = auth.uid())',
@@ -534,6 +652,11 @@ drop policy if exists rutina_ejercicios_propias on rutina_ejercicios;
 create policy rutina_ejercicios_propias on rutina_ejercicios for all
   using (exists (select 1 from rutinas r where r.id = rutina_id and r.user_id = auth.uid()))
   with check (exists (select 1 from rutinas r where r.id = rutina_id and r.user_id = auth.uid()));
+
+drop policy if exists evento_registros_propios on evento_registros;
+create policy evento_registros_propios on evento_registros for all
+  using (exists (select 1 from eventos e where e.id = evento_id and e.user_id = auth.uid()))
+  with check (exists (select 1 from eventos e where e.id = evento_id and e.user_id = auth.uid()));
 
 drop policy if exists series_log_propias on series_log;
 create policy series_log_propias on series_log for all

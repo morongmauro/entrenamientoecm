@@ -8,11 +8,43 @@ Es el tercer módulo del ecosistema, junto a **Alimentación** (mealtracker) y
 
 ---
 
+## ⚠ DÓNDE VIVE LA APP QUE USAN LOS CLIENTES
+
+**No es este repo.** La pantalla que el cliente abre con la pestaña
+"Entrena" es `mealtracker/src/Entrenamiento.jsx` y sus archivos
+`Entreno*.jsx`. Este repo nunca se llegó a enganchar: `openTraining()` del
+mealtracker no abre un iframe hacia aquí, monta su propio componente.
+
+Se decidió así a propósito. Dentro del mealtracker no hay CORS que
+configurar, ni `VITE_API_BASE`, ni un segundo despliegue de Vercel que
+mantener en sync, y la identidad y la navegación ya funcionan.
+
+**Lo que SÍ sigue siendo de este repo, y es lo único que hay que mantener:**
+
+| Qué | Dónde |
+|---|---|
+| El modelo de datos | `schema.sql` |
+| Las migraciones | `carga/migracion-*.sql` |
+| La carga de rutinas de Trainerize | `carga/carga-rutinas-trainerize.sql` |
+| La galería de 2.226 ejercicios | `carga/galeria-ejercicios.sql` |
+| El generador de la figura muscular | `carga/gen-figura.py` |
+| La documentación del modelo | `carga/MODELO-EJERCICIOS.md` |
+
+Los `src/*.jsx` de aquí son la versión anterior de las mismas pantallas, que
+se portaron al mealtracker. Se dejan como referencia, pero **editarlos no
+cambia nada de lo que ve el cliente**. Si tocas una pantalla, tócala en
+`mealtracker/src/`.
+
+Excepción: `src/figura-formas.js` y `src/musculos.js` los genera
+`carga/gen-figura.py`. Si lo vuelves a correr, copia el resultado a
+`mealtracker/src/` también.
+
+---
+
 ## Estado
 
-Andamiaje y modelo de datos. **Todavía NO se muestra a los clientes**: la app
-se usa suelta, en su propia URL, mientras se construye. No se ha tocado el
-repo del mealtracker.
+Andamiaje y modelo de datos. Como app independiente **no se muestra a los
+clientes** — ver el aviso de arriba: lo que usan vive en el mealtracker.
 
 | Pieza | Estado |
 |---|---|
