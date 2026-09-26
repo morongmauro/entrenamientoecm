@@ -1,185 +1,170 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Dumbbell, Calendar, User, AlertCircle } from 'lucide-react';
-import { BG, BG_STAINS, SURFACE, BORDER, TEXT, TEXT_MUTED, TEXT_LIGHT,
-         ACCENT, ACCENT_DARK, SHADOW_CARD, FONT_DISPLAY } from './theme.js';
-import { readIdentity, setIdentityManual, clearIdentity, isEmbedded } from './identity.js';
-
 // ─────────────────────────────────────────────────────────────────────────
-// CASCARÓN DEL MÓDULO DE ENTRENAMIENTO
+// MÓDULO DE ENTRENAMIENTO DEL CLIENTE
 //
-// Esta primera versión existe para UNA cosa: verificar en el teléfono que el
-// módulo calza dentro del iframe de la app principal antes de construirle
-// funcionalidad encima. Comprueba las cuatro reglas del contrato:
+// Cuatro secciones y una regla que las gobierna todas: LA FUERZA MANDA.
 //
-//   1. el fondo calza con el de la app padre (BG, sin costura visible)
-//   2. la identidad llega por ?mt_user / ?mt_name y se reconoce sola
+//   Hoy       lo que toca hoy, y la semana debajo
+//   Mes       el calendario, para ver si está cumpliendo
+//   Rutinas   el plan completo, informativo
+//   Resumen   entrenamiento + alimentación de la semana
+//
+// Encima de cualquiera se abre "ejecutar rutina", que es una pantalla y no
+// una sección: se entra desde el día que toca y se sale al terminar.
+//
+// EL CONTRATO CON LA APP PADRE (no tocar sin leer el README)
+//   1. el fondo calza con el de la app (BG + BG_STAINS, sin costura)
+//   2. la identidad llega por ?mt_user / ?mt_name
 //   3. NADA fijo abajo: el padre monta el iframe 64px más corto y le pinta
-//      un degradado de 96px encima — una barra inferior propia quedaría
-//      tapada por la barra ovalada de la app
+//      un degradado de 96px encima. Una barra inferior propia quedaría
+//      tapada por la barra ovalada de la app — por eso la navegación de
+//      este módulo va ARRIBA y no abajo.
 //   4. cero scroll horizontal
-//
-// El calendario, el constructor y la ejecución de rutinas se montan encima
-// de esto una vez confirmado. -- ver README.md
 // ─────────────────────────────────────────────────────────────────────────
+import React, { useEffect, useMemo, useState } from 'react';
+import { BG, BG_STAINS, SURFACE, BORDER, TEXT, TEXT_MUTED, TEXT_LIGHT,
+         ACCENT, ACCENT_DARK, ACCENT_LIGHT, SHADOW_CARD, FONT_DISPLAY } from './theme.js';
+import { readIdentity, setIdentityManual, clearIdentity, isEmbedded } from './identity.js';
+import Hoy from './Hoy.jsx';
+import Mes from './Mes.jsx';
+import Rutinas from './Rutinas.jsx';
+import Resumen from './Resumen.jsx';
+import Ejecutar from './Ejecutar.jsx';
 
 const FADE_TOP = 46;      // degradado superior que pinta la app padre
 const FADE_BOTTOM = 96;   // degradado inferior + barra ovalada
 
+const SECCIONES = [
+  ['hoy', 'Hoy'],
+  ['mes', 'Mes'],
+  ['rutinas', 'Rutinas'],
+  ['resumen', 'Resumen'],
+];
+
 export default function App() {
   const [identity, setIdentity] = useState(() => readIdentity());
   const [nombreInput, setNombreInput] = useState('');
+  const [seccion, setSeccion] = useState('hoy');
+  const [rutinaAbierta, setRutinaAbierta] = useState(null);
   const embedded = useMemo(() => isEmbedded(), []);
 
-  // Título de la pestaña solo importa cuando se abre suelta.
   useEffect(() => {
     if (!embedded && identity.name) document.title = `Entrenamiento · ${identity.name}`;
   }, [embedded, identity.name]);
 
+  // Al cambiar de sección se sube. Sin esto, saltar de un Mes largo a Hoy te
+  // deja a media página en un sitio que ya no existe.
+  useEffect(() => { window.scrollTo({ top: 0 }); }, [seccion, rutinaAbierta]);
+
   const sinIdentidad = !identity.name && !identity.userId;
+  const nombre = identity.name;
 
   return (
     <div style={{ minHeight: '100dvh', background: BG, color: TEXT, position: 'relative' }}>
-      {/* Mismas manchas orgánicas del fondo que la app padre: al entrar al
-          módulo el fondo no cambia, solo cambia el contenido. */}
-      <div style={{
-        position: 'fixed', inset: 0, background: BG_STAINS, pointerEvents: 'none',
-      }} />
+      {/* Mismas manchas del fondo que la app padre: al entrar al módulo el
+          fondo no cambia, solo cambia el contenido. */}
+      <div style={{ position: 'fixed', inset: 0, background: BG_STAINS, pointerEvents: 'none' }} />
 
       <div style={{
         position: 'relative',
         maxWidth: 560, margin: '0 auto', padding: '0 20px',
-        // El aire de arriba y abajo NO es estético: es el espacio que la app
-        // padre tapa con sus degradados. Sin esto, el contenido de los
-        // extremos se lee a medias dentro del iframe.
         paddingTop: `calc(${FADE_TOP}px + env(safe-area-inset-top, 0px) + 12px)`,
         paddingBottom: `calc(${FADE_BOTTOM}px + env(safe-area-inset-bottom, 0px))`,
       }}>
 
-        {/* Cabecera propia SOLO cuando se abre suelta: embebido, la app
-            padre ya pinta su píldora justo encima de esta franja. */}
-        {!embedded && (
-          <div style={{ marginBottom: 20 }}>
+        {!embedded && !sinIdentidad && (
+          <div style={{
+            display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
+            gap: 10, marginBottom: 14,
+          }}>
             <div style={{
-              fontFamily: FONT_DISPLAY, fontSize: 30, letterSpacing: '0.04em',
+              fontFamily: FONT_DISPLAY, fontSize: 22, letterSpacing: '0.04em',
               textTransform: 'uppercase', lineHeight: 1, color: ACCENT_DARK,
             }}>Entrenamiento</div>
-            <div style={{ fontSize: 13, color: TEXT_MUTED, marginTop: 4 }}>
-              Entrena con Método
-            </div>
+            <button
+              onClick={() => { clearIdentity(); setIdentity(readIdentity()); setNombreInput(''); }}
+              style={{
+                border: 'none', background: 'transparent', padding: 0, cursor: 'pointer',
+                fontSize: 11.5, color: TEXT_LIGHT, fontFamily: 'inherit',
+              }}>{identity.name} · cambiar</button>
           </div>
         )}
 
         {sinIdentidad ? (
-          <Tarjeta>
-            <Fila icono={<User size={18} color={ACCENT} />} titulo="¿Quién eres?" />
-            <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.5, margin: '0 0 14px' }}>
-              Abriste el módulo suelto, sin venir desde la app. Escribe tu nombre
-              tal como está en el CRM para probarlo.
-            </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const next = setIdentityManual(nombreInput);
-                if (next) setIdentity(next);
-              }}
-              style={{ display: 'flex', gap: 8 }}
-            >
-              <input
-                value={nombreInput}
-                onChange={(e) => setNombreInput(e.target.value)}
-                placeholder="Nombre y apellido"
-                autoComplete="off"
-                style={{
-                  flex: 1, padding: '10px 12px', borderRadius: 10,
-                  border: `1px solid ${BORDER}`, background: SURFACE,
-                  fontSize: 15, color: TEXT, outline: 'none',
-                }}
-              />
-              <button type="submit" style={{
-                padding: '10px 16px', borderRadius: 10, border: 0,
-                background: '#1F1F1F', color: '#fff', fontSize: 14,
-                fontWeight: 600, cursor: 'pointer',
-              }}>Entrar</button>
-            </form>
-          </Tarjeta>
+          <PedirNombre
+            valor={nombreInput}
+            alCambiar={setNombreInput}
+            alEnviar={() => {
+              const next = setIdentityManual(nombreInput);
+              if (next) setIdentity(next);
+            }}
+          />
+        ) : rutinaAbierta ? (
+          <Ejecutar
+            nombre={nombre}
+            rutinaId={rutinaAbierta}
+            alSalir={() => setRutinaAbierta(null)}
+          />
         ) : (
           <>
-            <Tarjeta>
-              <Fila icono={<User size={18} color={ACCENT} />} titulo={identity.name || 'Cliente sin nombre'} />
-              <Dato etiqueta="Identidad" valor={
-                identity.origen === 'url' ? 'recibida de la app'
-                : identity.origen === 'guardada' ? 'guardada en este teléfono'
-                : 'escrita a mano'} />
-              <Dato etiqueta="mt_user" valor={identity.userId || '— (no llegó)'} mono />
-              <Dato etiqueta="Contexto" valor={embedded ? 'embebido en la app' : 'abierto suelto'} />
-              {!embedded && (
-                <button
-                  onClick={() => { clearIdentity(); setIdentity(readIdentity()); setNombreInput(''); }}
-                  style={{
-                    marginTop: 12, padding: '7px 12px', borderRadius: 8,
-                    border: `1px solid ${BORDER}`, background: 'transparent',
-                    fontSize: 12, color: TEXT_MUTED, cursor: 'pointer',
-                  }}>Cambiar de cliente</button>
-              )}
-            </Tarjeta>
+            {/* La navegación va ARRIBA: abajo la tapa la barra de la app padre. */}
+            <nav style={{
+              display: 'flex', gap: 3, background: 'rgba(255,255,255,0.72)',
+              backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
+              border: `1px solid ${BORDER}`, borderRadius: 999, padding: 3,
+              marginBottom: 20, position: 'sticky', top: 8, zIndex: 30,
+            }}>
+              {SECCIONES.map(([id, lab]) => (
+                <button key={id} onClick={() => setSeccion(id)} style={{
+                  flex: 1, border: 'none', borderRadius: 999, padding: '9px 6px',
+                  background: seccion === id ? ACCENT : 'transparent',
+                  color: seccion === id ? '#fff' : TEXT_MUTED,
+                  fontSize: 13, fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'background .14s, color .14s',
+                }}>{lab}</button>
+              ))}
+            </nav>
 
-            <Tarjeta>
-              <Fila icono={<Calendar size={18} color={ACCENT} />} titulo="Tu calendario" />
-              <Vacio texto="Aún no hay fases asignadas. Cuando el coach cargue tu primera fase desde el CRM, aquí aparecen tus días de entreno." />
-            </Tarjeta>
-
-            <Tarjeta>
-              <Fila icono={<Dumbbell size={18} color={ACCENT} />} titulo="Rutina de hoy" />
-              <Vacio texto="Nada programado para hoy." />
-            </Tarjeta>
+            {seccion === 'hoy' && <Hoy nombre={nombre} alEntrenar={setRutinaAbierta} />}
+            {seccion === 'mes' && <Mes nombre={nombre} alEntrenar={setRutinaAbierta} />}
+            {seccion === 'rutinas' && <Rutinas nombre={nombre} alEntrenar={setRutinaAbierta} />}
+            {seccion === 'resumen' && <Resumen nombre={nombre} />}
           </>
         )}
-
-        {/* Sello del build. Por ahora el módulo se usa SUELTO (todavía no se
-            embebe en la app de los clientes), así que esto sirve para saber
-            qué versión estás viendo tras cada deploy a Vercel. */}
-        <div style={{
-          marginTop: 8, padding: '10px 12px', borderRadius: 10,
-          border: `1px dashed ${BORDER}`, display: 'flex', gap: 8,
-          alignItems: 'flex-start',
-        }}>
-          <AlertCircle size={15} color={TEXT_LIGHT} style={{ flexShrink: 0, marginTop: 1 }} />
-          <div style={{ fontSize: 11, color: TEXT_LIGHT, lineHeight: 1.5 }}>
-            Build {typeof __BUILD_VERSION__ !== 'undefined' ? __BUILD_VERSION__ : 'dev'}
-            {' · '}modo {embedded ? 'embebido' : 'suelto'}.
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-// ── piezas visuales, mismo lenguaje que la app padre ──────────────────────
-
-const Tarjeta = ({ children }) => (
-  <div style={{
-    background: SURFACE, borderRadius: 16, padding: 16,
-    boxShadow: SHADOW_CARD, marginBottom: 14,
-  }}>{children}</div>
-);
-
-const Fila = ({ icono, titulo }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 10 }}>
-    {icono}
-    <div style={{ fontSize: 15, fontWeight: 700, letterSpacing: '-0.01em' }}>{titulo}</div>
-  </div>
-);
-
-const Dato = ({ etiqueta, valor, mono }) => (
-  <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, padding: '5px 0' }}>
-    <span style={{ fontSize: 12, color: TEXT_MUTED, flexShrink: 0 }}>{etiqueta}</span>
-    <span style={{
-      fontSize: 12, color: TEXT, textAlign: 'right', wordBreak: 'break-all',
-      fontFamily: mono ? 'ui-monospace, SFMono-Regular, Menlo, monospace' : 'inherit',
-    }}>{valor}</span>
-  </div>
-);
-
-const Vacio = ({ texto }) => (
-  <p style={{ fontSize: 13, color: TEXT_MUTED, lineHeight: 1.55, margin: 0 }}>{texto}</p>
-);
+// Solo aparece abriendo el módulo suelto, para probarlo. Embebido, la
+// identidad llega siempre en la URL.
+function PedirNombre({ valor, alCambiar, alEnviar }) {
+  return (
+    <div style={{
+      background: SURFACE, borderRadius: 18, padding: 20, boxShadow: SHADOW_CARD,
+    }}>
+      <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 6 }}>¿Quién eres?</div>
+      <p style={{ fontSize: 13.5, color: TEXT_MUTED, lineHeight: 1.55, margin: '0 0 14px' }}>
+        Abriste el módulo suelto, sin venir desde la app. Escribe tu nombre tal
+        como lo tiene tu coach.
+      </p>
+      <form onSubmit={(e) => { e.preventDefault(); alEnviar(); }} style={{ display: 'flex', gap: 8 }}>
+        <input
+          value={valor}
+          onChange={(e) => alCambiar(e.target.value)}
+          placeholder="Nombre y apellido"
+          autoComplete="off"
+          style={{
+            flex: 1, padding: '11px 13px', borderRadius: 12,
+            border: `1px solid ${BORDER}`, background: SURFACE,
+            // 16px: por debajo, Safari hace zoom al enfocar.
+            fontSize: 16, color: TEXT, outline: 'none', fontFamily: 'inherit',
+          }} />
+        <button type="submit" style={{
+          padding: '11px 18px', borderRadius: 12, border: 0,
+          background: TEXT, color: '#fff', fontSize: 14.5,
+          fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
+        }}>Entrar</button>
+      </form>
+    </div>
+  );
+}

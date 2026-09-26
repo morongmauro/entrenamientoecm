@@ -4,8 +4,13 @@
 // Esta lista es EL CONTRATO entre tres cosas que tienen que coincidir o el
 // dibujo del cuerpo se pinta mal:
 //   1. la tabla `musculos` del Supabase del CRM (schema.sql §1)
-//   2. los <path id="..."> del SVG anatómico (frente y espalda)
+//   2. las formas de `figura-formas.js` (frente y espalda), que pintan
+//      <FiguraMusculos> aquí y `musculos-figura.js` en el CRM
 //   3. este archivo, que usa la app para saber qué pintar
+//
+// El campo `cara` decide en qué silueta debe existir la forma. `gen-figura.py`
+// se genera contra esta lista y hay una comprobación que falla si algún slug
+// queda sin forma o sobra una forma sin slug.
 //
 // Se generó desde schema.sql. Si agregas un músculo, agrégalo AL SQL y
 // vuelve a generar — no lo edites suelto aquí.

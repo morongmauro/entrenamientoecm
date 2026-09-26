@@ -12,10 +12,17 @@ En el SQL editor de Supabase, de arriba abajo:
 | # | Archivo | Qué hace |
 |---|---|---|
 | 1 | `migracion-visibilidad.sql` | Añade el interruptor `visible_cliente`, la vista `rutinas_visibles` y la función `publicar_fase()`. Se puede correr dos veces. |
-| 2 | `carga-rutinas-trainerize.sql` | Los 160 ejercicios, las 10 fases, las 29 rutinas y las 1.266 series de historial. Se puede correr dos veces: lo ya cargado se salta solo. |
+| 2 | `carga-rutinas-trainerize.sql` | Los 160 ejercicios, las 10 fases, las 29 rutinas y las 1.266 series de historial de la primera tanda. Se puede correr dos veces: lo ya cargado se salta solo. |
+| 3 | `migracion-calendario.sql` | `rutinas.dias_semana` (una rutina puede caer en varios días), `sesiones.origen` y la reconstrucción del calendario desde el historial. |
+| 4 | `carga-rutinas-trainerize-2.sql` | La segunda tanda: 9 clientes más, 80 ejercicios nuevos, 27 rutinas y 655 series. **Necesita el 3**: si falta, se para y te dice cuál. |
+| 5 | `migracion-calendario.sql` otra vez | Rellena los días de las fases nuevas a partir de los de sus rutinas. Es idempotente. |
 
-Los dos están probados de cero contra PostgreSQL 16, que es lo que corre
-Supabase.
+El paso 5 no es un descuido: el 3 deduce los días del historial que hay **en
+ese momento**, y el 4 mete historial nuevo. Correrlo otra vez al final es lo
+que hace que las fases de la segunda tanda declaren sus días.
+
+Todos están probados de cero contra PostgreSQL 16, que es lo que corre
+Supabase: se carga, se vuelve a correr y no duplica nada.
 
 ## Qué queda cargado
 
@@ -31,6 +38,46 @@ Supabase.
 | Carlos Martínez | Cycle 14 | 5 | 24 ago 2026 | 4 | 126 |
 | David Forero | Cycle 17 | 4 | 24 ago 2026 | 4 | 230 |
 | Diana Tovar | Cycle 7 | 6 | 17 ago 2026 | 2 | 91 |
+
+### Segunda tanda (`carga-rutinas-trainerize-2.sql`)
+
+Sacada de los PDF del 19-20 sep 2026. Los días salen de en qué día de la
+semana cayó cada sesión del historial, así que son los reales, no un
+supuesto.
+
+| Cliente | Fase | Semanas | Desde | Rutinas | Sesiones | Días |
+|---|---|---|---|---|---|---|
+| Juan Esteban Echeverri | Cycle 5 | 2 | 7 sep 2026 | 3 | — | L M X J V |
+| Juan Sebastián Mariño | Cycle 3 | 4 | 7 sep 2026 | 4 | 1 | M |
+| Juan Sinisterra | Cycle 4 | 4 | 7 sep 2026 | 3 | 8 | L M X V S |
+| Julio Diéguez | Cycle 12 | 5 | 7 sep 2026 | 3 | 4 | X J S D |
+| María Alejandra González | Cycle 4 | 5 | 14 sep 2026 | 4 | — | — |
+| Maryu Alzate | Cycle 11 | 5 | 7 sep 2026 | 2 | 7 | L M X J |
+| Natalia Samper | Cycle 3 | 5 | 17 ago 2026 | 3 | 1 | J |
+| Santiago Fonseca | Cycle 2 | 5 | 14 sep 2026 | 3 | 4 | L M X J |
+| Sebastián Mojica | Cycle 1 | 4 | 31 ago 2026 | 2 | 2 | M J |
+
+**Dos no tienen días y hay que ponérselos a mano**: María Alejandra González
+(la fase arrancó el 14 sep y no registró nada) y las rutinas sueltas de los
+demás que nunca se entrenaron. Salen listadas al final de
+`migracion-calendario.sql`.
+
+**Juan Esteban Echeverri no tiene plan de fuerza**: son 3 rutinas de
+movilidad de 2 semanas, con dos ejercicios de muñeca escritos en español.
+Parece rehabilitación.
+
+**Datos raros del historial que conviene mirar**, todos avisados dentro del
+propio SQL en las notas de cada fase:
+
+- *Juan Sinisterra*: «Banded Sprinter» sale como `60 reps x 40.1 kg`. Es
+  1 minuto a máxima potencia — Trainerize lo guardó en la columna
+  equivocada. Entra como tiempo.
+- *Santiago Fonseca*: «Mini Band Wall Slides» serie 1 dice 133 reps y la
+  serie 2 dice 13. Es un dedazo suyo; entra como 13.
+- *Julio Diéguez*: «Lateral Shuttle Run» sale con kg cuando son segundos.
+- *Sebastián Mojica, Maryu Alzate y Juan Sinisterra* tienen en el historial
+  ejercicios que **ya no están en sus rutinas** (se los quitaste después).
+  Entran como historial, no como programados: la rutina queda como está hoy.
 
 Los circuitos entran como bloques con sus vueltas y su descanso, los sets ×
 reps y los descansos van tal cual, y el historial de "Previous Stats" entra
