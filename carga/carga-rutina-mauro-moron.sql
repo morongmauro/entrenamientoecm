@@ -1,5 +1,5 @@
 -- ═══════════════════════════════════════════════════════════════════════
--- CARGA DE RUTINA · Mauro Morón · Cycle 2 · exportada de Trainerize (20 sep 2026)
+-- CARGA DE RUTINA · Mauro Morón · Ciclo 2 · exportada de Trainerize (20 sep 2026)
 -- ═══════════════════════════════════════════════════════════════════════
 -- Dónde: Supabase del CRM → SQL Editor → pegar todo → Run.
 --
@@ -7,7 +7,7 @@
 --   1. Reusa las fichas de los 38 ejercicios (ya están en tu galería desde las
 --      cargas anteriores; si faltara alguno, lo crea con su nombre en español
 --      y el de Trainerize en `alias`).
---   2. Crea la FASE «Cycle 2»: 5 semanas, del 14 sep al 18 oct 2026, L-M-X-J.
+--   2. Crea la FASE «Ciclo 2»: 5 semanas, del 14 sep al 18 oct 2026, L-M-X-J.
 --   3. Crea las 3 RUTINAS con sus circuitos, series, reps, descansos y días:
 --        Lower Body + Core Training → lunes y jueves
 --        Push Training              → martes
@@ -18,7 +18,7 @@
 -- DIFERENCIA con las otras cargas: esta fase entra ACTIVA y VISIBLE, para que
 -- la veas ya en la app. Las de los clientes entraron como borrador.
 --
--- Se puede correr dos veces: si Mauro ya tiene «Cycle 2», se salta solo.
+-- Se puede correr dos veces: si Mauro ya tiene «Ciclo 2», se salta solo.
 -- ═══════════════════════════════════════════════════════════════════════
 
 do $guard$
@@ -68,8 +68,8 @@ begin
     raise warning 'SALTADO: no encuentro a «Mauro Morón» en `clientes`. Corrige el nombre y vuelve a correr.';
     return;
   end if;
-  if exists (select 1 from fases where cliente_id = v_cli and nombre = 'Cycle 2') then
-    raise notice 'SALTADO: «Mauro Morón» ya tiene la fase Cycle 2 cargada.';
+  if exists (select 1 from fases where cliente_id = v_cli and nombre in ('Cycle 2', 'Ciclo 2')) then
+    raise notice 'SALTADO: «Mauro Morón» ya tiene la fase Ciclo 2 cargada.';
     return;
   end if;
 
@@ -122,9 +122,9 @@ begin
 
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, dias_semana, orden, estado, visible_cliente, publicada_en)
-  values (v_coach, v_cli, 'Cycle 2',
+  values (v_coach, v_cli, 'Ciclo 2',
           'Bloque importado de Trainerize — la rutina que ya venías haciendo.',
-          'Importado el 2026-09-27 desde el PDF de Trainerize (Cycle 2, 2026-09-14 a 2026-10-18).',
+          'Importado el 2026-09-27 desde el PDF de Trainerize (Ciclo 2, 2026-09-14 a 2026-10-18).',
           5, date '2026-09-14', array['L','M','X','J']::text[],
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'activa', true, now())
   returning id into v_fase;
@@ -725,7 +725,7 @@ begin
             (select id from _ecm_mm where alias='Dumbbell Shrug'), 4, 8, 27.5, 'kg');
   end if;
 
-  raise notice 'OK: «Mauro Morón» · Cycle 2 · 3 rutinas, activa y visible.';
+  raise notice 'OK: «Mauro Morón» · Ciclo 2 · 3 rutinas, activa y visible.';
 end $cli$;
 
 -- ═══════════════════════════════════════════════════════════════════════
