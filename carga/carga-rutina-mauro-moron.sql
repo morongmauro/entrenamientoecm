@@ -123,7 +123,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, dias_semana, orden, estado, visible_cliente, publicada_en)
   values (v_coach, v_cli, 'Ciclo 2',
-          'Bloque importado de Trainerize — la rutina que ya venías haciendo.',
+          null,
           'Importado el 2026-09-27 desde el PDF de Trainerize (Ciclo 2, 2026-09-14 a 2026-10-18).',
           5, date '2026-09-14', array['L','M','X','J']::text[],
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'activa', true, now())

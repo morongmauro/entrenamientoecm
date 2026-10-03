@@ -290,7 +290,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 5',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 5, 2026-09-07 a 2026-09-20). Revisar antes de enviar al cliente.',
           2, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -399,7 +399,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 3',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 3, 2026-09-07 a 2026-10-04). Revisar antes de enviar al cliente.',
           4, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -693,7 +693,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 4',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 4, 2026-09-07 a 2026-10-04). Revisar antes de enviar al cliente. Dos datos raros del historial: ''Banded Sprinter'' dice 60 reps x 40.1 kg (es 1 min a máxima potencia, Trainerize lo guardó en la columna equivocada) y ''Lateral Shuttle Run'' sale con kg. Los cargo como tiempo. Además, en el 8 sep hay ejercicios que ya no están en Push (Clapping Push Up, los de Smith Machine, Machine Seated Chest Fly, Cable Tricep Kickback, Elevated Pike Push-Up): entran como historial, no como programados.',
           4, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -1896,7 +1896,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 12',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 12, 2026-09-07 a 2026-10-11). Revisar antes de enviar al cliente. Ojo: ''Lateral Shuttle Run'' aparece en el historial como ''1 reps x 60 kg''. Son 60 SEGUNDOS, no 60 kg — Trainerize lo guardó en la columna equivocada. Lo cargo como 60 s.',
           5, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -2382,7 +2382,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 4',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 4, 2026-09-14 a 2026-10-18). Revisar antes de enviar al cliente.',
           5, date '2026-09-14',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -2553,7 +2553,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 11',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 11, 2026-09-07 a 2026-10-11). Revisar antes de enviar al cliente. En el historial del 8-10 sep hay ejercicios que YA NO están en la rutina (Dumbbell Walking Lunge, Mini Band Side Lying Hip Abduction, Bodyweight Bent Knee Single Leg Calf Raise, Half Burpee with Dumbbell, Dumbbell Glute Bridge Chest Press, Seated Dumbbell Front Raise to Lateral Raise, Dumbbell Isometric Bicep Curl). Entran como historial, no como programados.',
           5, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -3705,7 +3705,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 3',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 3, 2026-08-17 a 2026-09-20). Revisar antes de enviar al cliente.',
           5, date '2026-08-17',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -3995,7 +3995,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 2',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 2, 2026-09-14 a 2026-10-18). Revisar antes de enviar al cliente. En el historial del 16 sep, ''Mini Band Wall Slides'' serie 1 dice 133 reps (la 2 dice 13). Es un dedazo suyo. Lo cargo como 13 y te lo aviso.',
           5, date '2026-09-14',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -4730,7 +4730,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 1',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-25 desde el PDF de Trainerize (Cycle 1, 2026-08-31 a 2026-09-27). Revisar antes de enviar al cliente. En el historial aparece ''Split Squat Pulse'' con series, pero YA NO está en la rutina: se lo quitaste después. Entra como historial, no como ejercicio programado.',
           4, date '2026-08-31',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')

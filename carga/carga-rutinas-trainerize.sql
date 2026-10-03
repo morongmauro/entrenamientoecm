@@ -243,7 +243,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 8',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 8, 2026-08-24 a 2026-09-27). Revisar antes de enviar al cliente.',
           5, date '2026-08-24',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -1771,7 +1771,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 6',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 6, 2026-09-14 a 2026-10-18). Revisar antes de enviar al cliente.',
           5, date '2026-09-14',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -2362,7 +2362,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 4',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 4, 2026-09-07 a 2026-10-11). Revisar antes de enviar al cliente.',
           5, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -2512,7 +2512,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 18',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 18, 2026-09-07 a 2026-10-11). Revisar antes de enviar al cliente.',
           5, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -3782,7 +3782,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 3',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 3, 2026-09-07 a 2026-10-04). Revisar antes de enviar al cliente.',
           4, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -4277,7 +4277,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 2',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 2, 2026-09-07 a 2026-10-04). Revisar antes de enviar al cliente.',
           4, date '2026-09-07',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -4392,7 +4392,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 14',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 14, 2026-08-31 a 2026-09-27). Revisar antes de enviar al cliente.',
           4, date '2026-08-31',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -5559,7 +5559,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 7',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 7, 2026-08-17 a 2026-09-27). Revisar antes de enviar al cliente.',
           6, date '2026-08-17',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -6199,7 +6199,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 17',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 17, 2026-08-24 a 2026-09-20). Revisar antes de enviar al cliente.',
           4, date '2026-08-24',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
@@ -7593,7 +7593,7 @@ begin
   insert into fases (user_id, cliente_id, nombre, objetivo, notas_coach, semanas,
                      fecha_inicio, orden, estado)
   values (v_coach, v_cli, 'Cycle 14',
-          'Bloque importado de Trainerize — la rutina que ya venía haciendo.',
+          null,
           'Importado el 2026-09-20 desde el PDF de Trainerize (Cycle 14, 2026-08-24 a 2026-09-27). Revisar antes de enviar al cliente.',
           5, date '2026-08-24',
           coalesce((select max(orden)+1 from fases where cliente_id = v_cli), 1), 'borrador')
