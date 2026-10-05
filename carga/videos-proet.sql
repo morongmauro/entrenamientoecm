@@ -88,7 +88,9 @@ update ejercicios e
        updated_at   = now()
   from _proet p
  where (e.alias = p.alias or lower(e.nombre) = lower(p.nombre) or lower(e.nombre) = lower(p.alias))
-   and e.video_ref is distinct from p.ref;
+   -- Solo llena ejercicios SIN video: nunca reemplaza uno que ya está puesto
+   -- (puede haberlo elegido el coach en el CRM; ver migracion-videos-protegidos.sql).
+   and coalesce(e.video_fuente, 'ninguno') = 'ninguno';
 
 -- Lo que quedó, con su enlace para verlo.
 select p.nombre, p.titulo as video_proet, coalesce(p.nota, '') as nota,

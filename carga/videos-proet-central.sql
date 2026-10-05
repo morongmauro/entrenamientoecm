@@ -189,7 +189,7 @@ insert into _v (alias, nombre, canal, ref, titulo, nota) values
   ('SuperBand Dislocates', 'Dislocaciones de hombro con banda', 'central', 'ddGqVY8mdKE', 'Banded Dislocate', null),
   ('SuperBand Push Up', 'Flexión con superbanda', 'central', '62IYRzkncSo', 'Banded Push-Up', null);
 
--- Parte 1: reemplaza.
+-- Parte 1: llena los que no tienen video (ya no reemplaza).
 update ejercicios e
    set video_fuente = 'youtube',
        video_ref    = v.ref,
@@ -198,7 +198,9 @@ update ejercicios e
        updated_at   = now()
   from _v v
  where (e.alias = v.alias or lower(e.nombre) = lower(v.nombre) or lower(e.nombre) = lower(v.alias))
-   and e.video_ref is distinct from v.ref;
+   -- Solo llena ejercicios SIN video: nunca reemplaza uno que ya está puesto
+   -- (puede haberlo elegido el coach en el CRM; ver migracion-videos-protegidos.sql).
+   and coalesce(e.video_fuente, 'ninguno') = 'ninguno';
 
 create temp table _g (nombre text, ref text, titulo text) on commit drop;
 insert into _g (nombre, ref, titulo) values
