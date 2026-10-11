@@ -176,3 +176,35 @@ Los músculos se recortan contra la silueta (`clipPath`), así que las formas
 se dibujan generosas a propósito y manda el contorno. Solo se pinta lo que el
 ejercicio trabaja: pintar además los 30 en gris llenaba el cuerpo de placas
 pálidas y costaba distinguir cuál era el principal.
+
+## Tercera tanda: export de Trainerize del 10 oct (`carga-trainerize-10oct.sql`)
+
+Los 15 clientes con rutina nueva el lunes 12 oct, sacados del archivo
+`rutinas_clientes_2026-10-12.md`. **Un solo archivo, se corre una vez** en
+el SQL editor del CRM (se puede repetir: la segunda vez no cambia nada). Al
+final sale una tabla con una fila por cliente diciendo qué hizo.
+
+| Qué | Cuánto |
+|---|---|
+| Foto de Trainerize por cliente (tabla nueva `trainerize_resumen`) | 15 |
+| Sesiones nuevas de historial (20 sep → 8 oct), `origen = 'importada'` | 36 |
+| Series nuevas (reps @ peso) | 881 |
+| Fases nuevas en borrador | Andrea Ciclo 9 · David Ciclo 18 · Sebastián Mojica Ciclo 2 |
+| Rutinas corregidas como están hoy en Trainerize | Julio: Upper · Santiago: Push y Pull |
+| Ejercicios nuevos en la galería | 1 (Muscle Up Tutorial) |
+
+Protecciones, todas probadas contra PostgreSQL 16 con las dos cargas
+anteriores ya corridas:
+
+- No toca videos, fichas, seguimientos ni fases publicadas.
+- Si ese día ya hay una sesión (importada antes o marcada por el cliente en
+  su app), se salta.
+- Una rutina solo se corrige si sigue **exactamente** como se importó y el
+  cliente todavía no la ve. Si la editaste en el CRM o ya está publicada,
+  no la toca y lo dice en la tabla del final.
+- Los registros con ⚠ y los de «ciclo anterior» no entran como sesión
+  (saldrían como récord al cliente); quedan en la foto para que el CRM te
+  los muestre.
+
+En el CRM la foto aparece en la ficha del cliente («📦 Trainerize al lado de
+lo tuyo») y en la columna de asistencia del constructor de rutinas.
