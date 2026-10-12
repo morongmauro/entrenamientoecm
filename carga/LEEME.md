@@ -143,6 +143,53 @@ borra las fases importadas y, en cascada, sus rutinas, bloques, sesiones y
 series. Los ejercicios de la galería no se tocan salvo que se lo pidas
 expresamente (y solo los que nadie esté usando).
 
+## Carga del 12 oct (`carga-trainerize-12oct.sql`): 9 clientes con ciclo activo
+
+Pega el archivo entero en el SQL editor de Supabase y dale Run. Puedes
+correrlo hayas corrido o no la del 10 oct, y correrlo dos veces no duplica
+nada. Al final sale una fila por cliente: la fase, si ya la ve en la app,
+qué rutina cae cada día y qué cambió.
+
+Por cliente: deja la fase de su ciclo actual con sus rutinas como están hoy
+en Trainerize, les pone los días de su calendario, mete las sesiones del
+28 sep al 11 oct con sus series y **le envía la fase** (activa y visible),
+para que la use desde ya en la app. La fase anterior que seguía activa pasa
+a «finalizada» (no se borra nada). No toca lo que el cliente marcó en su
+app, ni las rutinas que editaste en el CRM, ni los días de una fase que el
+cliente ya veía.
+
+| Cliente | Fase | Hasta | Días |
+|---|---|---|---|
+| David Forero | Ciclo 18 | 8 nov | L Upper · M y S Lower · X Push · J Pull |
+| Juan Sinisterra | Ciclo 5 (nueva) | 18 oct | L y J Lower · M Push · X Pull · V Upper · S Agility |
+| Amauri Barbosa | Ciclo 6 | 18 oct | L y X Upper · M y J Lower |
+| Samuel León | Ciclo 1 (nueva) | 18 oct | L y X Lower · M, V y S Upper |
+| Santiago Fonseca | Ciclo 2 | 18 oct | L y J Lower · M y V Push · X y S Pull |
+| Andrea Angulo | Ciclo 9 | 1 nov | L y X Upper · M y J Lower |
+| Sebastián Mojica | Ciclo 2 | 1 nov | L y D Lower · M y J Upper |
+| María Alejandra González | Ciclo 4 | 18 oct | L y S Lower · X Full Body · V y D Upper · movilidad escapular sin día fijo |
+| Natalia Samper | — | — | No se envía: su ciclo terminó el 20 sep |
+
+Lo que conviene saber:
+
+- **David:** el reporte del 12 oct trae su Lower y su Push del ciclo 17. Lo
+  que hizo el 6 y el 7 oct (ya en el 18) es lo del export del 10 oct, así
+  que esos dos van de ahí.
+- **Sebastián** alterna sus dos rutinas sin día fijo. La app necesita días
+  fijos: quedó su patrón de la semana del 28 sep. Si quieres otro, muévelo
+  en el CRM.
+- **María Alejandra:** la «Scapular Mobility Flow» va el mismo día que otra
+  rutina, y la app pone una por día; queda en «También en tu ciclo».
+- **Samuel León** tiene que existir en `clientes` con ese nombre; si no, sale
+  «SALTADO» y el resto entra igual. Lo creas y vuelves a correr el archivo.
+- **No entran** (quedan en la foto con ⚠): el Bar Hang de 20 min de Amauri y
+  la serie de «1104 kg» de Santiago (las otras series de ese día sí entran).
+- **El cardio** de Trainerize (Walking diario, Running) no se crea en el
+  calendario: queda en la foto. Las carreras que van dentro de las rutinas
+  siguen dentro.
+- Cinco ciclos terminan el **18 oct**: ese día necesitan su ciclo siguiente
+  en el CRM o la app se queda sin rutina.
+
 ---
 
 # La figura muscular
