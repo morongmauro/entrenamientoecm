@@ -23,6 +23,7 @@
 --   1. «👥 Los usan ahora» NO SE TOCA: se calcula AQUÍ, al correrlo, con la
 --      misma regla del CRM (ciclo vigente de cada cliente activo). Si mañana
 --      le pones un ejercicio a alguien, ese queda fuera aunque esté en la lista.
+--      Y al final se comprueba: si uno solo de esos cambiara, se cancela todo.
 --   2. Antes de cambiar nada, el video que tenía cada ejercicio queda guardado
 --      en `ejercicios_video_respaldo`. Para volver atrás:
 --      carga/videos-en-analisis-deshacer.sql
@@ -1949,6 +1950,12 @@ select distinct on (e.id) e.id, v.ref, v.canal, v.coincide, v.titulo
    and (coalesce(e.video_fuente, 'ninguno') <> 'youtube' or e.video_ref is distinct from v.ref)
  order by e.id;
 
+-- Foto de cómo están HOY los videos de los que usan tus clientes, para
+-- comprobar al final que ninguno cambió.
+create temp table _hoy_foto on commit drop as
+select id, video_fuente, video_ref, video_url, video_inicio_seg, video_path, poster_path, poster_url
+  from ejercicios where id in (select ejercicio_id from _hoy);
+
 -- 3. Respaldo del video que tenían.
 insert into ejercicios_video_respaldo
   (ejercicio_id, video_fuente, video_ref, video_url, video_inicio_seg, video_path, poster_path, poster_url, video_elegido_at, motivo, puesto_ref)
@@ -1968,6 +1975,21 @@ update ejercicios e
        updated_at       = now()
   from _cambio c
  where e.id = c.id;
+
+-- 5. Comprobación final: si UNO SOLO de los que usan hoy tus clientes quedó
+--    distinto, se cancela TODO y no se guarda ningún cambio.
+do $$
+declare n integer;
+begin
+  select count(*) into n
+    from _hoy_foto f join ejercicios e on e.id = f.id
+   where (e.video_fuente, e.video_ref, e.video_url, e.video_inicio_seg, e.video_path, e.poster_path, e.poster_url)
+         is distinct from
+         (f.video_fuente, f.video_ref, f.video_url, f.video_inicio_seg, f.video_path, f.poster_path, f.poster_url);
+  if n > 0 then
+    raise exception 'Cancelado: % ejercicio(s) que usan hoy tus clientes iban a cambiar. No se guardó nada.', n;
+  end if;
+end $$;
 
 -- Resumen: cuántos cambiaron por canal, y cuántos se saltaron por estar en uso hoy.
 select 'Cambiados' as que, split_part(c.canal, ' · ', 1) as detalle, count(*) as ejercicios from _cambio c group by 2
