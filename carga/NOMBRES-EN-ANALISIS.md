@@ -2,9 +2,9 @@
 
 SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 
-- **Nombres corregidos: 115.** Todos con el nombre de Trainerize, sacado del export de tus clientes o de la librería de Trainerize.
-- **Duplicados: 40.** Quedan en la categoría «🔁 Duplicados» del CRM para que decidas con un botón.
-- **Sin nombre en Trainerize: 120.** No aparecen en ningún dato de Trainerize, así que no les puse nada. Si me pasas sus nombres, los cargo.
+- **Nombres corregidos: 143.** Todos con el nombre de Trainerize, sacado del export de tus clientes o de la librería de Trainerize.
+- **Duplicados: 46.** Quedan en la categoría «🔁 Duplicados» del CRM para que decidas con un botón.
+- **Sin nombre en Trainerize: 94.** No aparecen en ningún dato de Trainerize, así que no les puse nada. Si me pasas sus nombres, los cargo.
 
 ## Duplicados
 
@@ -12,10 +12,12 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 |---|---|---|
 | dead bug · Bicho muerto | Bodyweight Deadbug · Dead bug | sí |
 | Burpees | Burpee · Burpee | sí |
+| Cambio de dirección en 5-10-5 | Shuttle Run · Ida y vuelta corta | sí |
 | Curl femoral sentado | Machine Seated Leg Curl · Curl femoral sentado en máquina | sí |
 | leg curl · Curl femoral tumbado | Machine Lying Leg Curl · Curl femoral tumbado en máquina | sí |
 | curl banco 45 · Curl inclinado en banco | Dumbbell Incline Bicep Curl · Curl inclinado con mancuernas | sí |
 | hammer curl · Curl martillo | Dumbbell Hammer Curl · Curl martillo con mancuernas | sí |
+| reverse peck deck · Deltoide posterior en máquina | Machine Seated Reverse Fly · Pájaro en máquina | sí |
 | lateral raise · Elevaciones laterales | Dumbbell Lateral Raise · Elevación lateral con mancuernas | no |
 | Elevaciones laterales en máquina | Machine Lateral Raise · Elevación lateral en máquina | sí |
 | Elevaciones laterales en polea | Cable Lateral Raise · Elevación lateral en polea | sí |
@@ -28,10 +30,13 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | mountain climbers · Escaladores | Mountain Climber · Escalador | sí |
 | Escaladores cruzados | Cross Body Mountain Climber · Escalador cruzado | no |
 | leg extension · Extensión de cuádriceps | Machine Seated Leg Extension · Extensión de cuádriceps en máquina | sí |
+| Face pull | Cable Rope Face Pull · Face pull con cuerda | sí |
 | Fondos asistidos en máquina | Machine Assisted Dip · Machine Assisted Dip | sí |
 | Halo con kettlebell | Kettlebell Halo · Halo con kettlebell | sí |
+| lat pulldown · Jalón al pecho en polea | Wide Grip Lat Pulldown · Jalón al pecho agarre ancho | sí |
 | Patada de glúteo en polea | Cable Glute Kickback · Patada de glúteo en polea | no |
 | Patada de tríceps en polea | Cable Tricep Kickback · Cable Tricep Kickback | sí |
+| contractor de pecho, mariposa · Peck deck | Machine Seated Chest Fly · Aperturas en máquina | sí |
 | RDL · Peso muerto rumano con barra | Barbell Romanian Deadlift · Peso muerto rumano con barra | no |
 | RDL · Peso muerto rumano con mancuernas | Dumbbell Romanian Deadlift · Peso muerto con mancuernas Romano | sí |
 | leg press · Prensa de piernas | Angled Machine Leg Press · Prensa inclinada | sí |
@@ -41,6 +46,7 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Press de banca en Smith | Smith Machine Bench Press · Press banca en multipower | no |
 | Press de hombro en máquina | Machine Seated Shoulder Press · Press de hombro sentado en máquina | sí |
 | Press de hombro sentado con mancuernas | Dumbbell Seated Shoulder Press · Press de hombro sentado con mancuernas | no |
+| chest press · Press de pecho en máquina | Machine Seated Chest Press · Press de pecho sentado en máquina | sí |
 | floor press · Press de suelo con mancuernas | Dumbbell Floor Press · Press de pecho en suelo | sí |
 | Press inclinado en Smith | Smith Machine Incline Bench Press · Press inclinado en multipower | sí |
 | remo serrucho · Remo con mancuerna a una mano | Dumbbell Single Arm Row · Remo a una mano con mancuerna | sí |
@@ -57,24 +63,16 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 |---|---|
 | Aducción de cadera en polea | — |
 | Apertura de libro | open book |
-| Aperturas en banco plano | fly plano |
 | Bajada del cajón y salto | depth jump |
 | Buenos días en Smith | — |
 | Burpee con salto al cajón | — |
-| Cambio de dirección en 5-10-5 | — |
 | Caminata lateral con banda | monster walk |
-| Cargada con kettlebell | kettlebell clean |
 | Cargada de potencia | power clean |
-| Carioca | — |
 | Carrera en escalera de agilidad | — |
 | Carrera en zigzag | — |
-| Cruces en polea baja | — |
 | Curl con barra Z | curl EZ |
 | Curl de bíceps con kettlebell | — |
-| Curl de muñeca con mancuernas | — |
 | Círculos de hombro | — |
-| Círculos de tobillo | — |
-| Deltoide posterior en máquina | reverse peck deck |
 | Deslizamiento de cadera en cuadrupedia | rock back |
 | Deslizamiento en pared | wall slides |
 | Desplazamiento lateral defensivo | shuffle |
@@ -84,7 +82,6 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Empuje de cadera con kettlebell | — |
 | Encogimientos en máquina | — |
 | Estiramiento de antebrazo en pared | — |
-| Estiramiento de cuádriceps de pie | — |
 | Estiramiento de dorsal colgado | — |
 | Estiramiento de gemelo en pared | — |
 | Estiramiento de isquiotibiales de pie | — |
@@ -92,20 +89,12 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Estiramiento de pectoral en marco de puerta | — |
 | Estiramiento de psoas en zancada con elevación de brazo | — |
 | Estiramiento de tríceps sobre la cabeza | — |
-| Estiramiento del flexor de cadera de rodillas | — |
 | Extensión de tríceps con kettlebell | — |
 | Extensión de tríceps en polea | pushdown |
-| Extensión lumbar en banco romano | hiperextensiones |
-| Face pull | — |
 | Flexión con salto al cajón | — |
-| Flexión explosiva | plyo push up |
 | Giro ruso con mancuerna | russian twist |
 | Good morning con kettlebell | — |
-| Hack squat en máquina | — |
 | Hip thrust en Smith | — |
-| Jalón al pecho agarre cerrado | — |
-| Jalón al pecho en máquina | — |
-| Jalón al pecho en polea | lat pulldown |
 | Jalón tras nuca | — |
 | Lanzamiento de balón a la pared | wall ball |
 | Lanzamiento de balón desde el pecho | chest pass |
@@ -116,19 +105,14 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Molino con kettlebell | windmill |
 | Movilidad de muñeca en cuadrupedia | — |
 | Movilidad de tobillo en zancada | ankle rocks |
-| Paseo del camarero | waiter walk, overhead carry |
 | Paseo del granjero con kettlebells | — |
-| Paseo del granjero con mancuernas | farmer walk |
 | Paseo del maletero | suitcase carry |
-| Patada de tríceps | kickback |
-| Peck deck | contractor de pecho, mariposa |
 | Peso muerto con kettlebell | — |
 | Peso muerto en máquina | — |
 | Peso muerto rumano con kettlebell | — |
 | Peso muerto rumano en Smith | — |
 | Plancha con arrastre de kettlebell | kettlebell drag |
 | Press cerrado con mancuernas | — |
-| Press de pecho en máquina | chest press |
 | Press de pecho en polea | — |
 | Press de suelo en Smith | — |
 | Press francés con mancuernas | skull crusher |
@@ -140,7 +124,6 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Remo en máquina apoyado al pecho | — |
 | Rodillo abdominal con barra | barbell rollout |
 | Rotación de torso en máquina | — |
-| Rotación torácica cuadrupedia | thread the needle |
 | Rotación torácica sentado sobre talones | — |
 | Salto a una pierna en el sitio | pogo a una pierna |
 | Salto al cajón a una pierna | — |
@@ -168,10 +151,7 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Step-up en Smith | — |
 | Step-up explosivo al cajón | — |
 | Swing con mancuerna | — |
-| Talones al glúteo corriendo | butt kicks |
 | Talón al glúteo caminando | — |
-| Zancada con barra | — |
-| Zancada con kettlebell | — |
 | Zancada con rotación torácica | world's greatest stretch |
 | Zancada con salto alternada | split jump |
 | Zancada en Smith | — |
@@ -186,6 +166,7 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Se pone el inglés | — · Curl de bíceps con barra | **Barbell Bicep Curl** · Curl de bíceps con barra | librería de Trainerize |
 | Se pone el inglés | — · Sentadilla búlgara con barra | **Barbell Bulgarian Split Squat** · Sentadilla búlgara con barra | librería de Trainerize |
 | Se pone el inglés | — · Press declinado con barra | **Barbell Decline Bench Press** · Press declinado con barra | librería de Trainerize |
+| Se pone el inglés | — · Zancada con barra | **Barbell Forward Lunge** · Zancada con barra | librería de Trainerize |
 | Se pone el inglés | — · Press inclinado con barra | **Barbell Incline Bench Press** · Press inclinado con barra | librería de Trainerize |
 | Se pone el inglés | — · Push press con barra | **Barbell Overhead Push Press** · Push press con barra | librería de Trainerize |
 | Se pone el inglés | — · Peso muerto sumo con barra | **Barbell Sumo Deadlift** · Peso muerto sumo con barra | librería de Trainerize |
@@ -198,29 +179,36 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Se pone el inglés | — · Curl martillo con cuerda en polea | **Cable Rope Hammer Curl** · Curl martillo con cuerda en polea | librería de Trainerize |
 | Se pone el inglés | — · Extensión de tríceps con cuerda | **Cable Rope Tricep Extension** · Extensión de tríceps con cuerda | librería de Trainerize |
 | Se pone el inglés | — · Remo sentado en polea baja | **Cable Seated Row** · Remo sentado en polea baja | librería de Trainerize |
+| Se pone el inglés | — · Cruces en polea baja | **Cable Standing Low To High Fly** · Cruces en polea baja | librería de Trainerize |
 | Se pone el inglés | — · Remo alto en polea | **Cable Upright Row** · Remo alto en polea | librería de Trainerize |
+| Se pone el inglés | — · Carioca | **Carioca (Karaoke) Crossover Shuffle** · Carioca | librería de Trainerize |
 | Se pone el inglés | — · Curl de bíceps con mancuernas | **Dumbbell Bicep Curl** · Curl de bíceps con mancuernas | export de tus clientes |
 | Se pone el inglés | — · Curl concentrado | **Dumbbell Concentration Curl** · Curl concentrado | librería de Trainerize |
 | Se pone el inglés | — · Press declinado con mancuernas | **Dumbbell Decline Bench Press** · Press declinado con mancuernas | librería de Trainerize |
+| Se pone el inglés | — · Curl de muñeca con mancuernas | **Dumbbell Palm Up Wrist Curl** · Curl de muñeca con mancuernas | librería de Trainerize |
 | Se pone el inglés | — · Pullover con mancuerna | **Dumbbell Pullover** · Pullover con mancuerna | librería de Trainerize |
 | Se pone el inglés | — · Push press con mancuernas | **Dumbbell Push Press** · Push press con mancuernas | librería de Trainerize |
 | Se pone el inglés | — · Sentadilla con mancuernas | **Dumbbell Squat** · Sentadilla con mancuernas | librería de Trainerize |
 | Se pone el inglés | — · Sentadilla sumo con mancuerna | **Dumbbell Sumo Squat** · Sentadilla sumo con mancuerna | librería de Trainerize |
 | Se pone el inglés | — · Thruster con mancuernas | **Dumbbell Thruster** · Thruster con mancuernas | librería de Trainerize |
+| Se pone el inglés | — · Hack squat en máquina | **Hack Squat** · Hack squat en máquina | librería de Trainerize |
 | Se pone el inglés | — · Saltos con cuerda | **Jump Rope** · Saltos con cuerda | librería de Trainerize |
 | Se pone el inglés | — · Clean and press con kettlebell | **Kettlebell Clean and Press** · Clean and press con kettlebell | librería de Trainerize |
+| Se pone el inglés | — · Zancada con kettlebell | **Kettlebell Forward Lunge** · Zancada con kettlebell | librería de Trainerize |
 | Se pone el inglés | — · Sentadilla goblet con kettlebell | **Kettlebell Goblet Squat** · Sentadilla goblet con kettlebell | librería de Trainerize |
 | Se pone el inglés | — · Remo renegado con kettlebell | **Kettlebell Renegade Row** · Remo renegado con kettlebell | librería de Trainerize |
 | Se pone el inglés | — · Remo con kettlebell a una mano | **Kettlebell Single Arm Row** · Remo con kettlebell a una mano | librería de Trainerize |
 | Se pone el inglés | — · Press de hombro con kettlebell | **Kettlebell Single Arm Shoulder Press** · Press de hombro con kettlebell | librería de Trainerize |
 | Se pone el inglés | — · Swing a una mano | **Kettlebell Single Arm Swing** · Swing a una mano | librería de Trainerize |
 | Se pone el inglés | — · Peso muerto a una pierna con kettlebell | **Kettlebell Single Leg Deadlift** · Peso muerto a una pierna con kettlebell | librería de Trainerize |
+| Se pone el inglés | — · Jalón al pecho en máquina | **Lat Pulldown Machine Wide Grip** · Jalón al pecho en máquina | librería de Trainerize |
 | Se pone el inglés | — · Balanceo de pierna lateral | **Lateral Leg Swing** · Balanceo de pierna lateral | librería de Trainerize |
 | Se pone el inglés | — · Curl de bíceps en máquina | **Machine Bicep Curl** · Curl de bíceps en máquina | librería de Trainerize |
 | Se pone el inglés | — · Press inclinado en máquina | **Machine Incline Chest Press** · Press inclinado en máquina | librería de Trainerize |
 | Se pone el inglés | — · Abductores en máquina | **Machine Seated Abduction** · Abductores en máquina | librería de Trainerize |
 | Se pone el inglés | — · Remo sentado en máquina | **Machine Seated Neutral Grip Row** · Remo sentado en máquina | librería de Trainerize |
 | Se pone el inglés | — · Extensión de tríceps en máquina | **Machine Tricep Pushdowns** · Extensión de tríceps en máquina | librería de Trainerize |
+| Se pone el inglés | — · Jalón al pecho agarre cerrado | **Narrow Grip Lat Pulldown** · Jalón al pecho agarre cerrado | librería de Trainerize |
 | Se pone el inglés | — · Escorpión tumbado | **Prone Scorpion** · Escorpión tumbado | librería de Trainerize |
 | Se pone el inglés | — · Zancada lateral | **Side Lunge** · Zancada lateral | librería de Trainerize |
 | Se pone el inglés | — · Remo en polea a una mano | **Single Arm Cable Row** · Remo en polea a una mano | librería de Trainerize |
@@ -234,7 +222,10 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Se pone el inglés | — · Fondos de tríceps en Smith | **Smith Machine Tricep Dip** · Fondos de tríceps en Smith | librería de Trainerize |
 | Se pone el inglés | — · Remo alto en Smith | **Smith Machine Upright Row** · Remo alto en Smith | librería de Trainerize |
 | Se pone el inglés | — · Sprint corto | **Sprint** · Sprint corto | librería de Trainerize |
+| Se pone el inglés | — · Estiramiento del flexor de cadera de rodillas | **Static Hip Flexor Stretch** · Estiramiento del flexor de cadera de rodillas | librería de Trainerize |
 | Se pone el inglés | — · Estiramiento de cuello lateral | **Static Lateral Neck Stretch** · Estiramiento de cuello lateral | librería de Trainerize |
+| Se pone el inglés | — · Estiramiento de cuádriceps de pie | **Static Quadricep Stretch** · Estiramiento de cuádriceps de pie | librería de Trainerize |
+| Se pone el inglés | — · Círculos de tobillo | **Supine Ankle Circles** · Círculos de tobillo | librería de Trainerize |
 | Se pone el inglés | — · Jalón al pecho agarre supino | **Underhand Grip Lat Pulldown** · Jalón al pecho agarre supino | librería de Trainerize |
 | Se pone el inglés | — · Rotación de columna tumbado | **Yoga - Supine Twist (Jathara Parivartanasana)** · Rotación de columna tumbado | librería de Trainerize |
 | Se pone el inglés | — · Curl Zottman | **Zottman Curl** · Curl Zottman | librería de Trainerize |
@@ -265,10 +256,16 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Apodo → inglés | shrugs · Encogimientos con barra | **Barbell Shrug** · Encogimientos con barra | librería de Trainerize |
 | Apodo → inglés | skull crusher · Press francés con barra | **Barbell Skullcrusher** · Press francés con barra | librería de Trainerize |
 | Apodo → inglés | upright row · Remo alto con barra | **Barbell Upright Row** · Remo alto con barra | librería de Trainerize |
+| Apodo → inglés | bird dog · Pájaro-perro | **Bird Dog** · Pájaro-perro | librería de Trainerize |
+| Apodo → inglés | box jump · Salto al cajón | **Box Jump** · Salto al cajón | export de tus clientes |
+| Apodo → inglés | butt kicks · Talones al glúteo corriendo | **Butt Kickers** · Talones al glúteo corriendo | librería de Trainerize |
 | Apodo → inglés | curl crucifijo · Curl de bíceps en polea alta | **Cable High Bicep Curl** · Curl de bíceps en polea alta | librería de Trainerize |
 | Apodo → inglés | crunch arrodillado · Crunch en polea | **Cable Kneeling Crunch** · Crunch en polea | librería de Trainerize |
 | Apodo → inglés | cable crossover · Cruces en polea alta | **Cable Upper Crossover** · Cruces en polea alta | librería de Trainerize |
 | Apodo → inglés | cat cow · Gato-camello | **Cat to Cow** · Gato-camello | export de tus clientes |
+| Apodo → inglés | double under · Doble salto con cuerda | **Double Under** · Doble salto con cuerda | librería de Trainerize |
+| Apodo → inglés | downward dog · Perro boca abajo | **Downward Dog** · Perro boca abajo | librería de Trainerize |
+| Apodo → inglés | fly plano · Aperturas en banco plano | **Dumbbell Flat Bench Chest Fly** · Aperturas en banco plano | librería de Trainerize |
 | Apodo → inglés | lunge · Zancada con mancuernas | **Dumbbell Forward Lunge** · Zancada con mancuernas | librería de Trainerize |
 | Apodo → inglés | front raise · Elevaciones frontales | **Dumbbell Front Raise** · Elevaciones frontales | librería de Trainerize |
 | Apodo → inglés | goblet squat · Sentadilla goblet | **Dumbbell Goblet Squat** · Sentadilla goblet | librería de Trainerize |
@@ -276,22 +273,33 @@ SQL: `carga/nombres-en-analisis.sql`. Los que usan hoy tus clientes no se tocan.
 | Apodo → inglés | chest supported row · Remo en banco inclinado con mancuernas | **Dumbbell Incline Bench Row** · Remo en banco inclinado con mancuernas | librería de Trainerize |
 | Apodo → inglés | renegade row · Remo renegado | **Dumbbell Renegade Row** · Remo renegado | librería de Trainerize |
 | Apodo → inglés | francés a una mano · Extensión de tríceps sobre la cabeza | **Dumbbell Single Arm Overhead Tricep Extension** · Extensión de tríceps sobre la cabeza | librería de Trainerize |
+| Apodo → inglés | kickback · Patada de tríceps | **Dumbbell Single Arm Tricep Kickback** · Patada de tríceps | librería de Trainerize |
 | Apodo → inglés | single leg RDL · Peso muerto a una pierna con mancuerna | **Dumbbell Single Leg Deadlift** · Peso muerto a una pierna con mancuerna | librería de Trainerize |
 | Apodo → inglés | press hombro de pie · Press militar con mancuernas | **Dumbbell Standing Shoulder Press** · Press militar con mancuernas | librería de Trainerize |
 | Apodo → inglés | subida al cajón · Step-up al cajón con mancuernas | **Dumbbell Step Up** · Step-up al cajón con mancuernas | librería de Trainerize |
 | Apodo → inglés | upright row · Remo alto con mancuernas | **Dumbbell Upright Row** · Remo alto con mancuernas | librería de Trainerize |
 | Apodo → inglés | walking lunge · Zancada caminando con mancuernas | **Dumbbell Walking Lunge** · Zancada caminando con mancuernas | export de tus clientes |
+| Apodo → inglés | farmer walk · Paseo del granjero con mancuernas | **Farmer Walk** · Paseo del granjero con mancuernas | librería de Trainerize |
 | Apodo → inglés | leg swings · Balanceo de pierna adelante y atrás | **Forward Leg Swing** · Balanceo de pierna adelante y atrás | librería de Trainerize |
+| Apodo → inglés | frog jump · Salto de rana | **Frog Jump** · Salto de rana | librería de Trainerize |
+| Apodo → inglés | high knees · Rodillas al pecho corriendo | **High Knees** · Rodillas al pecho corriendo | librería de Trainerize |
+| Apodo → inglés | hiperextensiones · Extensión lumbar en banco romano | **Hyperextension Roman Chair Back Extension** · Extensión lumbar en banco romano | librería de Trainerize |
 | Apodo → inglés | inchworm · Gusano caminando | **Inchworm Walk** · Gusano caminando | librería de Trainerize |
 | Apodo → inglés | jumping jacks · Saltos de tijera | **Jumping Jack** · Saltos de tijera | librería de Trainerize |
 | Apodo → inglés | figure 8 · Figura ocho con kettlebell | **Kettlebell Figure 8** · Figura ocho con kettlebell | librería de Trainerize |
+| Apodo → inglés | waiter walk, overhead carry · Paseo del camarero | **Kettlebell Overhead Carry** · Paseo del camarero | librería de Trainerize |
+| Apodo → inglés | kettlebell clean · Cargada con kettlebell | **Kettlebell Single Arm Clean** · Cargada con kettlebell | librería de Trainerize |
 | Apodo → inglés | arrancada KB · Snatch con kettlebell | **Kettlebell Snatch** · Snatch con kettlebell | librería de Trainerize |
+| Apodo → inglés | kettlebell swing · Swing ruso con kettlebell | **Kettlebell Swing** · Swing ruso con kettlebell | librería de Trainerize |
 | Apodo → inglés | levantada turca · Turkish get-up | **Kettlebell Turkish Get Up** · Turkish get-up | librería de Trainerize |
 | Apodo → inglés | plank jack · Plancha con salto de pies | **Low plank Jacks** · Plancha con salto de pies | librería de Trainerize |
 | Apodo → inglés | glute kickback · Patada de glúteo en máquina | **Machine Glute Kickback** · Patada de glúteo en máquina | librería de Trainerize |
 | Apodo → inglés | slam ball · Lanzamiento de balón al suelo | **Medicine Ball Slam** · Lanzamiento de balón al suelo | librería de Trainerize |
 | Apodo → inglés | clamshell · Almeja con banda | **Mini Band Clamshell** · Almeja con banda | librería de Trainerize |
+| Apodo → inglés | plyo push up · Flexión explosiva | **Plyometric Push Up** · Flexión explosiva | librería de Trainerize |
 | Apodo → inglés | pogo jumps · Saltos pogo | **Pogo Hops** · Saltos pogo | librería de Trainerize |
 | Apodo → inglés | skater jump · Patinador | **Skater** · Patinador | librería de Trainerize |
+| Apodo → inglés | sled push · Empuje de trineo | **Sled Push** · Empuje de trineo | librería de Trainerize |
+| Apodo → inglés | thread the needle · Rotación torácica cuadrupedia | **Thread the Needle Alternating Back Stretch** · Rotación torácica cuadrupedia | librería de Trainerize |
 | Apodo → inglés | pigeon pose · Estiramiento de la paloma | **Yoga - Pigeon Pose (Kapotasana)** · Estiramiento de la paloma | librería de Trainerize |
 | Apodo → inglés | puppy pose · Estiramiento del gato con brazos extendidos | **Yoga - Puppy Pose (Anahatasana)** · Estiramiento del gato con brazos extendidos | librería de Trainerize |

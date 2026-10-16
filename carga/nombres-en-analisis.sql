@@ -6,19 +6,19 @@
 --
 -- Los que usan hoy tus clientes NO SE TOCAN (se calcula al correrlo).
 --
--- 1. NOMBRES (115). La regla de siempre: alias = el nombre en inglés de
+-- 1. NOMBRES (143). La regla de siempre: alias = el nombre en inglés de
 --    Trainerize (se ve grande), nombre = el español (debajo). Ningún nombre
 --    es inventado: cada uno sale del export de Trainerize de tus clientes o
 --    de la librería de Trainerize (galeria-ejercicios.sql).
---      ·  58 que solo tenían español: se les pone el inglés de Trainerize.
---      ·  43 con un apodo en el campo de inglés («RDL», «arrancada KB»…):
+--      ·  69 que solo tenían español: se les pone el inglés de Trainerize.
+--      ·  60 con un apodo en el campo de inglés («RDL», «arrancada KB»…):
 --            se cambia por el de Trainerize; el apodo queda en las palabras
 --            de búsqueda, así el buscador lo sigue encontrando.
 --      ·  14 con el inglés repetido en el campo de español: se pone el español.
---    120 no aparecen en ningún dato de Trainerize: no se tocan. Están en
+--    94 no aparecen en ningún dato de Trainerize: no se tocan. Están en
 --    carga/NOMBRES-EN-ANALISIS.md.
 --
--- 2. DUPLICADOS (40). Fichas en análisis que son el mismo ejercicio que
+-- 2. DUPLICADOS (46). Fichas en análisis que son el mismo ejercicio que
 --    otra (casi siempre una que tus clientes usan hoy). No se archiva ni se
 --    borra nada: quedan marcadas y en el CRM salen en la categoría
 --    «🔁 Duplicados», con dos botones: «Archivar este» o «No es duplicado».
@@ -86,24 +86,33 @@ insert into _n values
   ('93892ff0-719f-4b9a-ac6c-d966d6215831', 'C', 'barbell row, remo pendlay', 'Remo con barra', 'Barbell Bent Over Row', 'Remo con barra'),
   ('326cb0c5-6401-4349-911b-2fff186c1cc7', 'B', 'Bench Knee Tuck to V Up', 'Bench Knee Tuck to V Up', 'Bench Knee Tuck to V Up', 'Rodillas al pecho a V-up en banco'),
   ('046472f0-c61d-4400-af23-6dcd5f367d7f', 'C', 'bench press', 'Press de banca con barra', 'Barbell Bench Press', 'Press de banca con barra'),
+  ('e2b7469d-661c-4d67-ac05-c98efe03744c', 'C', 'bird dog', 'Pájaro-perro', 'Bird Dog', 'Pájaro-perro'),
   ('c1e15169-6b44-4ef9-a82c-1204094cc952', 'B', 'Bodyweight Single Leg Calf Raise', 'Bodyweight Single Leg Calf Raise', 'Bodyweight Single Leg Calf Raise', 'Elevación de talón a una pierna sin peso'),
+  ('e4b4fb4f-c6a4-4f12-989e-09bf42eeec99', 'C', 'box jump', 'Salto al cajón', 'Box Jump', 'Salto al cajón'),
+  ('e4f22c68-9be5-46ad-9bc4-91e88792f549', 'C', 'butt kicks', 'Talones al glúteo corriendo', 'Butt Kickers', 'Talones al glúteo corriendo'),
   ('3cb56ff9-2c50-46d5-91c3-7e36d87cdb90', 'C', 'cable crossover', 'Cruces en polea alta', 'Cable Upper Crossover', 'Cruces en polea alta'),
   ('b4c64f2e-964c-4a38-93b8-0365003d632d', 'B', 'Cable Reverse Grip Tricep Pulldown', 'Cable Reverse Grip Tricep Pulldown', 'Cable Reverse Grip Tricep Pulldown', 'Extensión de tríceps en polea agarre supino'),
   ('2739296f-57f2-4328-b68f-c18f5f2eb0c0', 'B', 'Cable V-Bar Overhead Tricep Extension', 'Cable V-Bar Overhead Tricep Extension', 'Cable V-Bar Overhead Tricep Extension', 'Extensión de tríceps sobre la cabeza en polea con barra V'),
+  ('cbc016b1-cc21-4906-b699-0a979b69818a', 'A', null, 'Carioca', 'Carioca (Karaoke) Crossover Shuffle', 'Carioca'),
   ('edf3113d-b4f0-4568-99f0-7fc79e86707f', 'C', 'cat cow', 'Gato-camello', 'Cat to Cow', 'Gato-camello'),
   ('1620e4fc-4f27-438b-be4c-548bbde725cd', 'C', 'chest supported row', 'Remo en banco inclinado con mancuernas', 'Dumbbell Incline Bench Row', 'Remo en banco inclinado con mancuernas'),
+  ('0daf707b-c262-4a02-8602-d407940e5b3a', 'A', null, 'Círculos de tobillo', 'Supine Ankle Circles', 'Círculos de tobillo'),
   ('45d1cdfb-dd5a-42d8-9985-c71c5720226a', 'C', 'clamshell', 'Almeja con banda', 'Mini Band Clamshell', 'Almeja con banda'),
   ('272a1ebe-19dd-4369-8a3e-22e38a0f5349', 'A', null, 'Clean and press con kettlebell', 'Kettlebell Clean and Press', 'Clean and press con kettlebell'),
   ('b212f73d-dc7c-4305-b48f-09685b81cc5e', 'C', 'close grip', 'Press de banca agarre cerrado', 'Barbell Close Grip Bench Press', 'Press de banca agarre cerrado'),
+  ('dd8df905-27cc-4a3b-940d-084ef08a5351', 'A', null, 'Cruces en polea baja', 'Cable Standing Low To High Fly', 'Cruces en polea baja'),
   ('be8c7bfb-6091-4535-ba81-4b44870df6de', 'C', 'crunch arrodillado', 'Crunch en polea', 'Cable Kneeling Crunch', 'Crunch en polea'),
   ('aef5d351-f6b1-4f34-8655-18f9fcabbeda', 'A', null, 'Curl concentrado', 'Dumbbell Concentration Curl', 'Curl concentrado'),
   ('645e4d99-5106-4457-885e-9e90d7f8c509', 'C', 'curl crucifijo', 'Curl de bíceps en polea alta', 'Cable High Bicep Curl', 'Curl de bíceps en polea alta'),
   ('9b4ed34e-3e7e-41bc-9713-46f740e6c4bd', 'A', null, 'Curl de bíceps con barra', 'Barbell Bicep Curl', 'Curl de bíceps con barra'),
   ('ac2ef511-f2dd-48ab-8c32-db4561e5dee9', 'A', null, 'Curl de bíceps con mancuernas', 'Dumbbell Bicep Curl', 'Curl de bíceps con mancuernas'),
   ('f1d202a1-55aa-4d9d-a85d-796f2e5f3651', 'A', null, 'Curl de bíceps en máquina', 'Machine Bicep Curl', 'Curl de bíceps en máquina'),
+  ('cef259d5-870e-42a2-bc3f-1c0a58dd7fe5', 'A', null, 'Curl de muñeca con mancuernas', 'Dumbbell Palm Up Wrist Curl', 'Curl de muñeca con mancuernas'),
   ('61d0460e-2f7b-4fbf-a510-41b040ee68e4', 'A', null, 'Curl martillo con cuerda en polea', 'Cable Rope Hammer Curl', 'Curl martillo con cuerda en polea'),
   ('4590c14b-d8d5-4f50-833e-61e35c143f05', 'A', null, 'Curl Zottman', 'Zottman Curl', 'Curl Zottman'),
   ('6e894dd6-1838-402d-8503-45de7f3cc33a', 'C', 'deadlift', 'Peso muerto convencional', 'Barbell Deadlift', 'Peso muerto convencional'),
+  ('9dd04e99-499d-4408-9292-e62c0c626140', 'C', 'double under', 'Doble salto con cuerda', 'Double Under', 'Doble salto con cuerda'),
+  ('464f7333-97b3-4fa6-9147-52197a83d8f8', 'C', 'downward dog', 'Perro boca abajo', 'Downward Dog', 'Perro boca abajo'),
   ('39e4f086-8d41-42c8-8318-035929757c12', 'B', 'Dumbbell Bent Over Row', 'Dumbbell Bent Over Row', 'Dumbbell Bent Over Row', 'Remo inclinado con mancuernas'),
   ('831ee70d-7668-4c18-a55b-152a40489a50', 'B', 'Dumbbell Front Squat', 'Dumbbell Front Squat', 'Dumbbell Front Squat', 'Sentadilla frontal con mancuernas'),
   ('d13cd4de-98e9-470b-b13c-69180535dbee', 'B', 'Dumbbell Romanian Deadlift', 'Dumbbell Romanian Deadlift', 'Dumbbell Romanian Deadlift', 'Peso muerto rumano con mancuernas'),
@@ -111,24 +120,37 @@ insert into _n values
   ('cfcb15e7-a950-4407-9905-791087e1140a', 'A', null, 'Elevación de talones en Smith', 'Smith Machine Calf Raise', 'Elevación de talones en Smith'),
   ('e5034bfd-c485-458c-8811-81ffd255a423', 'A', null, 'Elevaciones frontales en polea', 'Cable Front Raise', 'Elevaciones frontales en polea'),
   ('3ed4090b-6941-46fa-ab26-a7f0e6f4e76c', 'A', null, 'Escorpión tumbado', 'Prone Scorpion', 'Escorpión tumbado'),
+  ('d9f2d0d3-a832-4666-9770-5ee123f667f3', 'A', null, 'Estiramiento de cuádriceps de pie', 'Static Quadricep Stretch', 'Estiramiento de cuádriceps de pie'),
   ('9437cbd5-d5cc-48ee-a1fe-796b330654ce', 'A', null, 'Estiramiento de cuello lateral', 'Static Lateral Neck Stretch', 'Estiramiento de cuello lateral'),
+  ('077189c8-2057-440b-bc70-afd22a13eabb', 'A', null, 'Estiramiento del flexor de cadera de rodillas', 'Static Hip Flexor Stretch', 'Estiramiento del flexor de cadera de rodillas'),
   ('17b475b2-c96f-4ef9-9137-ef6bce89b95f', 'A', null, 'Extensión de tríceps con cuerda', 'Cable Rope Tricep Extension', 'Extensión de tríceps con cuerda'),
   ('076db2f0-c662-494a-bae3-121e2a96b95a', 'A', null, 'Extensión de tríceps en máquina', 'Machine Tricep Pushdowns', 'Extensión de tríceps en máquina'),
+  ('38c63378-9008-47e2-982b-9022f35755cd', 'C', 'farmer walk', 'Paseo del granjero con mancuernas', 'Farmer Walk', 'Paseo del granjero con mancuernas'),
   ('8104e125-adbd-4b05-9215-517ca239f5c9', 'C', 'figure 8', 'Figura ocho con kettlebell', 'Kettlebell Figure 8', 'Figura ocho con kettlebell'),
   ('3a9bd0af-f4a6-421b-b5b1-34441a2b76ea', 'A', null, 'Flexiones inclinadas en Smith', 'Smith Machine Incline Push-Up', 'Flexiones inclinadas en Smith'),
   ('54180340-ac54-4dba-a467-3d531dcc7724', 'C', 'fly inclinado', 'Aperturas inclinadas con mancuernas', 'Dumbbell Incline Bench Chest Fly', 'Aperturas inclinadas con mancuernas'),
+  ('5e8f4716-1fe4-4386-9fee-35a58c588591', 'C', 'fly plano', 'Aperturas en banco plano', 'Dumbbell Flat Bench Chest Fly', 'Aperturas en banco plano'),
   ('e58b10f7-8993-4bb2-b3bb-6dab637480f5', 'A', null, 'Fondos de tríceps en Smith', 'Smith Machine Tricep Dip', 'Fondos de tríceps en Smith'),
   ('235b2590-9ee0-48f8-9d5c-2988b976aeb6', 'C', 'francés a una mano', 'Extensión de tríceps sobre la cabeza', 'Dumbbell Single Arm Overhead Tricep Extension', 'Extensión de tríceps sobre la cabeza'),
+  ('a15fb2ae-9052-4f04-b9f7-0ee0df7c1556', 'C', 'frog jump', 'Salto de rana', 'Frog Jump', 'Salto de rana'),
   ('5d8e7352-7b4b-4bbc-b67e-a1f1346817bd', 'C', 'front raise', 'Elevaciones frontales', 'Dumbbell Front Raise', 'Elevaciones frontales'),
   ('b0e7002c-796c-41d3-850e-e7e83dacbbda', 'C', 'front squat', 'Sentadilla frontal con barra', 'Barbell Front Squat', 'Sentadilla frontal con barra'),
   ('f2852ef3-56f6-42dd-80d6-f4eab1823993', 'C', 'glute kickback', 'Patada de glúteo en máquina', 'Machine Glute Kickback', 'Patada de glúteo en máquina'),
   ('e86e398a-3304-4848-9384-777e9969bfb4', 'C', 'goblet squat', 'Sentadilla goblet', 'Dumbbell Goblet Squat', 'Sentadilla goblet'),
   ('111dbe8f-3466-484c-a2c4-ea0e52ad477b', 'C', 'good morning', 'Buenos días', 'Barbell Good Morning', 'Buenos días'),
+  ('55b175be-35cf-4883-834e-6ff020578366', 'A', null, 'Hack squat en máquina', 'Hack Squat', 'Hack squat en máquina'),
+  ('c6727773-50c8-4d4b-9377-089d5e982871', 'C', 'high knees', 'Rodillas al pecho corriendo', 'High Knees', 'Rodillas al pecho corriendo'),
+  ('07f42777-4e18-49f8-9d0c-34ed732def1e', 'C', 'hiperextensiones', 'Extensión lumbar en banco romano', 'Hyperextension Roman Chair Back Extension', 'Extensión lumbar en banco romano'),
   ('173fd7a3-d592-4e2a-adae-b2d01264df00', 'C', 'inchworm', 'Gusano caminando', 'Inchworm Walk', 'Gusano caminando'),
+  ('bd89f146-8979-4734-a10f-fa601758e78f', 'A', null, 'Jalón al pecho agarre cerrado', 'Narrow Grip Lat Pulldown', 'Jalón al pecho agarre cerrado'),
   ('5677e7fd-33a3-4b46-b125-6045602c03f6', 'A', null, 'Jalón al pecho agarre supino', 'Underhand Grip Lat Pulldown', 'Jalón al pecho agarre supino'),
+  ('db71bda2-feed-434b-bf75-080c1163289b', 'A', null, 'Jalón al pecho en máquina', 'Lat Pulldown Machine Wide Grip', 'Jalón al pecho en máquina'),
   ('64b7c196-2ccd-4753-ba79-700a0699ddf6', 'C', 'jump lunge', 'Zancada con salto', 'Alternating Jump Lunge', 'Zancada con salto'),
   ('2fab04c3-a424-4a25-a1a9-29d07b98fd7b', 'C', 'jumping jacks', 'Saltos de tijera', 'Jumping Jack', 'Saltos de tijera'),
   ('b9e4d387-f7d7-4f38-bc98-4381d839bde5', 'B', 'Kettlebell Alternating Halo', 'Kettlebell Alternating Halo', 'Kettlebell Alternating Halo', 'Halo alterno con kettlebell'),
+  ('be3a1ddf-2ea0-4851-9662-df0d0b66d9fc', 'C', 'kettlebell clean', 'Cargada con kettlebell', 'Kettlebell Single Arm Clean', 'Cargada con kettlebell'),
+  ('45ad8b7a-dd77-446d-b350-63a4c5f322f8', 'C', 'kettlebell swing', 'Swing ruso con kettlebell', 'Kettlebell Swing', 'Swing ruso con kettlebell'),
+  ('1125ba84-112c-43a3-bc81-0561330d9f79', 'C', 'kickback', 'Patada de tríceps', 'Dumbbell Single Arm Tricep Kickback', 'Patada de tríceps'),
   ('dd1ac05b-57c6-4187-8734-a1b7bd4c2b2d', 'C', 'leg swings', 'Balanceo de pierna adelante y atrás', 'Forward Leg Swing', 'Balanceo de pierna adelante y atrás'),
   ('60c9ae73-c7b6-4191-9fd9-535fc7106d22', 'C', 'levantada turca', 'Turkish get-up', 'Kettlebell Turkish Get Up', 'Turkish get-up'),
   ('b54486f4-bc63-426f-8126-540c92e4578c', 'C', 'lunge', 'Zancada con mancuernas', 'Dumbbell Forward Lunge', 'Zancada con mancuernas'),
@@ -138,6 +160,7 @@ insert into _n values
   ('f599f895-6c3b-4311-8c27-1cca37f6c755', 'A', null, 'Peso muerto sumo con barra', 'Barbell Sumo Deadlift', 'Peso muerto sumo con barra'),
   ('41b69a35-454e-4882-816c-ac751613f589', 'C', 'pigeon pose', 'Estiramiento de la paloma', 'Yoga - Pigeon Pose (Kapotasana)', 'Estiramiento de la paloma'),
   ('74c4566b-c27f-408e-83ca-fa3ba61aacad', 'C', 'plank jack', 'Plancha con salto de pies', 'Low plank Jacks', 'Plancha con salto de pies'),
+  ('5665e5e8-893b-43cf-8542-c8a6049d7c3b', 'C', 'plyo push up', 'Flexión explosiva', 'Plyometric Push Up', 'Flexión explosiva'),
   ('7a9d17b5-71e6-4ba2-8c0c-6525a86c095a', 'C', 'pogo jumps', 'Saltos pogo', 'Pogo Hops', 'Saltos pogo'),
   ('2d57669f-6901-4219-9b80-d46f124cee28', 'C', 'power snatch', 'Arrancada de potencia', 'Barbell Power Snatch', 'Arrancada de potencia'),
   ('f96ee961-0de6-48e5-a667-df536f4ec6e9', 'A', null, 'Press de hombro con kettlebell', 'Kettlebell Single Arm Shoulder Press', 'Press de hombro con kettlebell'),
@@ -181,15 +204,20 @@ insert into _n values
   ('03b387d8-5832-4e6b-8e19-bdee0589f96c', 'A', null, 'Skipping', 'Bodyweight A-skip', 'Skipping'),
   ('bed179db-bb81-4777-9de9-1ae253178962', 'C', 'skull crusher', 'Press francés con barra', 'Barbell Skullcrusher', 'Press francés con barra'),
   ('43a21b13-dbba-4447-b0e4-fa866928e667', 'C', 'slam ball', 'Lanzamiento de balón al suelo', 'Medicine Ball Slam', 'Lanzamiento de balón al suelo'),
+  ('6718972e-388b-4d11-8fbf-98b51e14af16', 'C', 'sled push', 'Empuje de trineo', 'Sled Push', 'Empuje de trineo'),
   ('d599e135-f994-40f5-9fa4-ef3531a49748', 'A', null, 'Sprint corto', 'Sprint', 'Sprint corto'),
   ('7aa8fb0a-d925-468c-b22c-7e8e8f2df384', 'C', 'subida al cajón', 'Step-up al cajón con mancuernas', 'Dumbbell Step Up', 'Step-up al cajón con mancuernas'),
   ('f3559969-6217-406a-be2c-4ba5126729f3', 'A', null, 'Swing a una mano', 'Kettlebell Single Arm Swing', 'Swing a una mano'),
   ('4dc20eee-168b-4197-b96c-4b0722a2b8ef', 'A', null, 'Swing americano con kettlebell', 'American Kettlebell Swing', 'Swing americano con kettlebell'),
+  ('f7b3360e-e81d-450e-a321-0e6c37e149a9', 'C', 'thread the needle', 'Rotación torácica cuadrupedia', 'Thread the Needle Alternating Back Stretch', 'Rotación torácica cuadrupedia'),
   ('318f5e56-29c6-419c-96c7-8138fd56fe9d', 'A', null, 'Thruster con barra', 'Barbell Thruster', 'Thruster con barra'),
   ('96ae51fc-4a3c-4273-abf3-b9409027c20e', 'A', null, 'Thruster con mancuernas', 'Dumbbell Thruster', 'Thruster con mancuernas'),
   ('b2729534-921b-460a-9858-5b2bf0760d1b', 'C', 'upright row', 'Remo alto con mancuernas', 'Dumbbell Upright Row', 'Remo alto con mancuernas'),
   ('28c7839e-3eaa-4087-825c-85305138f00a', 'C', 'upright row', 'Remo alto con barra', 'Barbell Upright Row', 'Remo alto con barra'),
+  ('ec2d5485-7bb7-433f-af8b-d8407898459f', 'C', 'waiter walk, overhead carry', 'Paseo del camarero', 'Kettlebell Overhead Carry', 'Paseo del camarero'),
   ('5c9b9b77-2298-448a-ac0b-c692918bed37', 'C', 'walking lunge', 'Zancada caminando con mancuernas', 'Dumbbell Walking Lunge', 'Zancada caminando con mancuernas'),
+  ('5677c81b-d4fd-4590-8fa0-6cb322482fbd', 'A', null, 'Zancada con barra', 'Barbell Forward Lunge', 'Zancada con barra'),
+  ('d61e63e8-6a62-414b-bad6-1bc0834cb22c', 'A', null, 'Zancada con kettlebell', 'Kettlebell Forward Lunge', 'Zancada con kettlebell'),
   ('04d8e658-fe09-4c9e-a0fe-92be2aabe02a', 'A', null, 'Zancada lateral', 'Side Lunge', 'Zancada lateral');
 
 -- Solo si no la usan hoy, si sigue como estaba el 16 oct y si ninguna otra
@@ -223,6 +251,9 @@ create temp table _d (id uuid, de uuid) on commit drop;
 insert into _d values
   ('73ef48c8-eb2b-4445-b2be-986104328f9b', '4eb77905-2b41-4cfb-9aaf-fdb44bd1c7ad'),
   ('0a034c15-edf8-4cef-adcb-21bab3db529d', '3ea585d8-2a3a-425d-9a80-c5cf1bc5e140'),
+  ('0bd989e8-bb04-4c39-8877-9c31b4b75fa1', 'fd80ae5a-e95e-4793-8199-e8b017568d86'),
+  ('f85d6112-cb0e-4cd2-9e9c-7cd1648c269a', '6f5f99f4-d720-4e33-ab86-0cc190913948'),
+  ('61c54e30-3437-4bf7-a459-f8386fb1b8f6', '1f8c9dba-150a-4be3-bdff-d20c9e8ee2e8'),
   ('787b7c58-e081-4482-aff1-6d58ac48e493', '57d2ad01-1111-4296-a3d3-28be6a58898b'),
   ('8e55a63f-6dd1-4b69-9dd9-62cbc6c79db9', '9e8302c4-0a04-400d-bb54-6deed143dc30'),
   ('65c36bf7-32fa-41eb-ad96-e7b724d0f8c8', '7cde1733-e5ba-4b61-a2f4-e10e9cf568bf'),
@@ -235,10 +266,12 @@ insert into _d values
   ('9fdedad9-6033-4316-82d6-81fcd7b7eb5d', '970195ad-44a2-4d48-abf3-e5110a1b5d89'),
   ('ede608b6-f008-48d4-bb1d-21657fafb075', 'c036be29-1d08-43a9-b9bf-0a1cb6520c39'),
   ('f5f688cc-c641-4a0d-a9c7-b60f60bc364a', '5a7f41c8-e2af-4b29-ab8d-1ad4a319280e'),
+  ('f93427b3-85ca-429d-ab73-f67f50aba88f', 'a198269f-84c7-4c9f-9e07-9196098d8f8e'),
   ('3c1bb3ba-1178-4f31-bdef-f393ffa48d91', '2f4df0d9-d053-4765-a6da-249180691e44'),
   ('d2b251af-0423-428d-a981-8ad826550a79', '8f54ff73-739c-4169-bbc4-9c5e6798ba77'),
   ('d8e11db5-6f47-4a9e-8bac-8309de444f9f', 'c3c1b42f-56b8-4ba1-a3a0-981d63d71cf2'),
   ('ec650c0a-9b3a-422d-9016-f7cc72a5d87a', 'bb66864d-8bc7-43dc-812d-0991f426a1a1'),
+  ('530a3238-8f10-46c9-b2e4-71c1744ebcec', '622e264b-1125-403a-89b7-9f1b7bab0238'),
   ('be9a073d-ae7b-4b31-8609-4f6234b9af0f', '431e3c21-0281-49e6-992e-c81f2a1d10b2'),
   ('73dfd3d0-ace3-43f5-aaaa-feb39f39e1cf', '3ef001d1-7110-41bd-9143-053312113fb7'),
   ('67dda2d8-35af-4e4f-9ea3-00d50e301f91', '13f1b0fb-2fe7-4eb3-99d4-79c0bbfb819c'),
@@ -258,6 +291,7 @@ insert into _d values
   ('fdcb679d-dec4-4a2c-b692-7df2c874a31f', '39e4f086-8d41-42c8-8318-035929757c12'),
   ('66f31dd8-8887-487a-8bee-c672b25c101d', '17bddff4-18da-4fe6-b5e8-a7928c28440e'),
   ('c0b1df48-7dc3-4c2a-a95f-80832ff1a425', '4d131ad8-1c60-462e-8f0b-8cd81cddf0c5'),
+  ('1593d07a-55fa-459e-92b2-3000cee4afc7', 'e3d594e0-b13b-4ab1-a743-43c38ee73988'),
   ('52efe5ff-7245-47fc-bf26-d13250664015', '63a9233a-9302-4122-b0d2-a74a32c76e0a'),
   ('2c7a208a-38f0-412f-9de9-4dcdd3a6936f', '4f5b6902-5e62-4e56-9de4-eac605e3009b'),
   ('72c36e54-2a78-4048-b9b1-326cfba3901c', 'cfd70be8-e833-48d4-b848-c8a1e30f5c44');
