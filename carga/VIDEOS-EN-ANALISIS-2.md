@@ -1,6 +1,6 @@
 # Videos «En análisis» · segunda pasada (por ID)
 
-Archivo para correr: `carga/videos-en-analisis-2.sql` (Supabase del CRM → SQL Editor → pegar → Run). Para volver atrás: `carga/videos-en-analisis-2-deshacer.sql`.
+**Dos caminos, elige uno.** Revisar en el CRM: corre `carga/propuestas-videos-2.sql` (solo guarda propuestas, no cambia videos) y elige con «Usar este» en Galería → «🔬 En análisis» → «🎬 Revisar videos uno a uno». O ponerlos todos de una vez: `carga/videos-en-analisis-2.sql` (Supabase del CRM → SQL Editor → pegar → Run). Para volver atrás: `carga/videos-en-analisis-2-deshacer.sql`.
 
 - Galería real del 16 oct: 543 ejercicios, 190 en uso hoy (no se tocan), 353 en análisis.
 - **Entran en el SQL: 274.** Se quedan como están: 79 (abajo el porqué).
